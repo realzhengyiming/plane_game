@@ -1,8 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://r3k0bdc1bu5l"]
+[gd_scene load_steps=5 format=3 uid="uid://r3k0bdc1bu5l"]
 
+[ext_resource type="Script" uid="uid://dv773qpsfiebj" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://dou7iiy6wntei" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://ch2sksuxdxyy5" path="res://ui/UpgradeUI.tscn" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://crf4nq12bhxdd" path="res://score_label.gd" id="4_1bvp3"]
 
-[node name="main" type="Node2D"]
+[node name="main" type="Node2D" node_paths=PackedStringArray("score_label")]
+script = ExtResource("1_0xm2m")
+score_label = NodePath("Label")
+upgrade_ui_scene = ExtResource("3_lquwl")
 
 [node name="player" parent="." instance=ExtResource("1_ig7tw")]
-position = Vector2(559, 532)
+position = Vector2(496, 872)
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("4_1bvp3")

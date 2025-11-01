@@ -4,14 +4,14 @@
 [ext_resource type="Script" uid="uid://b2ooy2ijxi6l7" path="res://bullet.gd" id="1_v8qja"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v8qja"]
-radius = 6.0
+radius = 24.083189
 
 [node name="bullet" type="Area2D"]
 script = ExtResource("1_v8qja")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.16078432, 0.8352941, 0.68235296, 1)
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_v7oki")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

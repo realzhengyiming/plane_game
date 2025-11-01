@@ -1,0 +1,58 @@
+extends Node2D
+
+@export var enemy_scene: PackedScene  # 敌人场景引用
+@export var spawn_interval: float = 1.0  # 生成间隔（秒）
+@export var spawn_y_position: float = -0  # 生成Y坐标（屏幕外上方）
+# 引用计分板节点（在编辑器中拖入赋值）
+@export var score_label: Label  # 拖拽场景中的ScoreLabel到这里
+@export var upgrade_ui_scene: PackedScene  # 升级界面,全部都是要用的时候再创建,不错不错
+@onready var player: Area2D = $player
+
+var timer: float = 0.0
+var ui_score: int = 0.0
+
+func _ready() -> void:
+	pass
+	
+func upgrade_select(upgrade_type: int):
+	player.apply_upgrade(upgrade_type)
+	print("升级完毕")
+
+
+# 显式定义的回调函数：恢复游戏
+func _on_upgrade_ui_closed():
+	get_tree().paused = false
+
+func _process(delta: float) -> void:
+	timer += delta
+	if timer >= spawn_interval:
+		spawn_enemy()
+		timer = 0.0
+
+func spawn_enemy() -> void:
+	if not enemy_scene or not score_label:
+		return
+	
+	var enemy = enemy_scene.instantiate() as Area2D
+	enemy.position.y = spawn_y_position
+	add_child(enemy)
+	enemy.enemy_destroyed.connect(score_label.add_score)
+	enemy.enemy_destroyed.connect(add_score)
+	print("score_label score: " + str(score_label.score))
+
+
+func add_score():
+	ui_score += 1
+	if ui_score % 5  == 0:  # 这样写也很搞笑,是不是也应该用其他写法,或者状态机
+		print("达到了升级次数")
+		print(score_label.score)
+		print(score_label.score % 10)
+		print()
+		pass
+		get_tree().paused = true
+		var upgrade_ui = upgrade_ui_scene.instantiate()
+		upgrade_ui.upgrade_selected.connect(upgrade_select)
+
+		add_child(upgrade_ui)
+		# 升级界面关闭后恢复游戏（可在upgrade_ui的queue_free前发送信号）
+		upgrade_ui.tree_exiting.connect(_on_upgrade_ui_closed)

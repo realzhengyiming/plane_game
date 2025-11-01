@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://hsnbiaxrvjkm"]
+
+[ext_resource type="Texture2D" uid="uid://bxr815djo6s18" path="res://food_imgs/08_bread_dish.png" id="1_5axyq"]
+[ext_resource type="Script" uid="uid://c3prewn4rpn2g" path="res://ui/card_btn.gd" id="1_cwy8a"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5axyq"]
+
+[sub_resource type="Theme" id="Theme_5axyq"]
+default_font_size = 27
+
+[node name="PanelContainer" type="Button"]
+custom_minimum_size = Vector2(300, 400)
+offset_right = 300.0
+offset_bottom = 400.0
+script = ExtResource("1_cwy8a")
+
+[node name="Label4" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 24.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "费用"
+
+[node name="Label5" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1.0
+offset_bottom = 23.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="card_face" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 290.0
+offset_bottom = 390.0
+texture = ExtResource("1_5axyq")
+stretch_mode = 4
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+visible = false
+modulate = Color(0.45452422, 0.45452428, 0.45452422, 1)
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 248.0
+offset_right = 301.0
+offset_bottom = 398.0
+texture = SubResource("CanvasTexture_5axyq")
+
+[node name="card_title" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = 72.0
+offset_right = 1.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 100)
+theme = SubResource("Theme_5axyq")
+bbcode_enabled = true
+text = "[wave amp=10 speed=0.3]卡牌标题[/wave]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, -10)
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 47.0
+grow_vertical = 0
+size_flags_horizontal = 2
+text = "label1"
+
+[node name="card_content" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -78.0
+offset_top = -72.0
+offset_right = 82.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 6
+text = "这就是一只普通的小狗"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -47.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+text = "label3"

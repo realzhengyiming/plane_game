@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://by3y2w6ei4e1n"]
+
+[ext_resource type="Script" uid="uid://cx2vn3nr7lxdw" path="res://ui/game_over_ui.gd" id="1_mh6r7"]
+
+[sub_resource type="Theme" id="Theme_j85jc"]
+default_font_size = 80
+
+[node name="GameOverUI" type="CanvasLayer"]
+script = ExtResource("1_mh6r7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+color = Color(0.39308554, 0.3930855, 0.39308548, 1)
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_j85jc")
+text = "Game Over"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

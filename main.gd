@@ -6,17 +6,49 @@ extends Node2D
 # 引用计分板节点（在编辑器中拖入赋值）
 @export var score_label: Label  # 拖拽场景中的ScoreLabel到这里
 @export var upgrade_ui_scene: PackedScene  # 升级界面,全部都是要用的时候再创建,不错不错
-@onready var player: Area2D = $player
+@export var gameover_ui: PackedScene  # 升级界面,全部都是要用的时候再创建,不错不错
+@export var player_scene: PackedScene
+var player : Area2D = null  # 后赋值
 
 var timer: float = 0.0
 var ui_score: int = 0.0
 
 func _ready() -> void:
+	print("=== 新游戏场景初始化 _ready 执行 ===")  # 新增日志
+
+	player = player_scene.instantiate()
+	player.position = get_player_spawn_position(player)
+	# 放置到屏幕下方的中间位置
+	add_child(player)
+	
+	player.player_die_signal.connect(open_game_over_ui)  # 死了就打开gameoverr
 	pass
 	
-func upgrade_select(upgrade_type: int):
+func upgrade_select(player, upgrade_type: int):
 	player.apply_upgrade(upgrade_type)
 	print("升级完毕")
+
+func get_player_spawn_position(player: Area2D) -> Vector2:
+	var screen_size = get_viewport_rect().size
+	var player_size = Vector2(50, 50)  # 默认尺寸（防止出错）
+
+	# 1. 找到 Area2D 下的 CollisionShape2D 子节点（必选，否则碰撞必须有）
+	var collider = player.get_node_or_null("CollisionShape2D")
+	if collider and collider.shape:
+		# 2. 根据碰撞形状获取尺寸（只处理最常见的矩形和圆形）
+		if collider.shape is RectangleShape2D:
+			# 矩形：extents 是半宽/半高，所以 ×2 得到实际尺寸
+			player_size = collider.shape.extents * 2 * player.scale
+		elif collider.shape is CircleShape2D:
+			# 圆形：直径 = 半径 × 2
+			player_size = Vector2(collider.shape.radius * 2, collider.shape.radius * 2) * player.scale
+
+	# 3. 计算下方中间位置
+	return Vector2(
+		screen_size.x / 2,
+		screen_size.y - player_size.y / 2  # 底部贴屏幕
+	)
+
 
 
 # 显式定义的回调函数：恢复游戏
@@ -51,8 +83,12 @@ func add_score():
 		pass
 		get_tree().paused = true
 		var upgrade_ui = upgrade_ui_scene.instantiate()
-		upgrade_ui.upgrade_selected.connect(upgrade_select)
+		upgrade_ui.upgrade_selected.connect(upgrade_select.bind(player))
 
 		add_child(upgrade_ui)
 		# 升级界面关闭后恢复游戏（可在upgrade_ui的queue_free前发送信号）
 		upgrade_ui.tree_exiting.connect(_on_upgrade_ui_closed)
+
+func open_game_over_ui():
+	var game_over_ui = gameover_ui.instantiate()
+	add_child(game_over_ui)

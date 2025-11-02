@@ -5,11 +5,13 @@ extends Area2D
 @export var bullet_scene: PackedScene
 @export var fire_rate: float = 0.2
 @export var bullet_speed: float = 200.0
+@onready var player_sprite: Sprite2D = $Sprite2D
 
 # 生命值相关
 @export var max_health: int = 3  # 最大生命值
 var current_health: int = max_health  # 当前生命值
 signal health_changed(current, max)  # 生命值变化信号（传递当前值和最大值）
+signal player_die_signal
 
 var velocity: Vector2 = Vector2.ZERO
 var last_fire_time: float = 0.0
@@ -27,8 +29,28 @@ func _process(delta: float) -> void:
 	handle_shooting(delta)
 
 func handle_movement(delta: float) -> void:
+	# 计算移动向量
 	velocity = Input.get_vector("left", "right", "up", "down").normalized() * move_speed
 	position += velocity * delta
+
+	# 限制在屏幕范围内
+	clamp_to_screen()
+
+func clamp_to_screen() -> void:
+	# 获取屏幕（视口）的大小（像素）
+	var screen_size = get_viewport_rect().size
+	# 获取角色自身的大小（假设是Sprite2D，以中心为锚点）
+	var sprite_size = player_sprite.texture.get_size() * scale  # 考虑缩放后的实际大小
+
+	# 计算角色的边界范围（避免角色一半移出屏幕）
+	var min_x = sprite_size.x / 2  # 左边界（角色宽度的一半）
+	var max_x = screen_size.x - sprite_size.x / 2  # 右边界
+	var min_y = sprite_size.y / 2  # 上边界（角色高度的一半）
+	var max_y = screen_size.y - sprite_size.y / 2  # 下边界
+
+	# 限制位置在范围内
+	position.x = clamp(position.x, min_x, max_x)
+	position.y = clamp(position.y, min_y, max_y)
 
 func handle_shooting(delta: float) -> void:
 	if Input.is_action_pressed("j"):
@@ -62,7 +84,10 @@ func take_damage(amount: int) -> void:
 
 # 玩家死亡处理（可扩展：游戏结束逻辑）
 func die() -> void:
+	emit_signal("player_die_signal")
+	await get_tree().process_frame  # 等待下一帧
 	print("玩家死亡！")
+
 	queue_free()  # 暂时简单处理：销毁玩家
 
 

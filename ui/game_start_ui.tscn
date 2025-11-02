@@ -1,6 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://did0cs1y6l2aw"]
+[gd_scene load_steps=4 format=3 uid="uid://did0cs1y6l2aw"]
 
 [ext_resource type="Script" uid="uid://doumu3myb4lei" path="res://gameover_ui.gd" id="1_kdpjn"]
+
+[sub_resource type="Theme" id="Theme_kdpjn"]
+default_font_size = 73
 
 [sub_resource type="Theme" id="Theme_j85jc"]
 default_font_size = 80
@@ -16,6 +19,19 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 color = Color(0.39308554, 0.3930855, 0.39308548, 1)
+
+[node name="game_title" type="RichTextLabel" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 240.0
+offset_bottom = 283.0
+grow_horizontal = 2
+theme = SubResource("Theme_kdpjn")
+bbcode_enabled = true
+text = "[shake=3,3]打飞机大作战[/shake]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="."]
 anchors_preset = 8

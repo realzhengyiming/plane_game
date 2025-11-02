@@ -19,3 +19,19 @@ player_scene = ExtResource("1_ig7tw")
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("4_1bvp3")
+
+[node name="player_hp" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="attack" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="player_move_speed" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="bullet_speed" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeBulletSpeedStrategy" load_steps=3 format=3 uid="uid://dykxs5jymf6ss"]
+
+[ext_resource type="Script" uid="uid://b1vvkdakticl5" path="res://resources/upgrade/upgrade_bullet_speed_strategy.gd" id="1_ppb3j"]
+[ext_resource type="Texture2D" uid="uid://dckll3vprvicc" path="res://物品_Items_-_《DOTA2》官方网站/hyperstone_png.png" id="2_6i7ak"]
+
+[resource]
+script = ExtResource("1_ppb3j")
+texture = ExtResource("2_6i7ak")
+upgrade_name = "振奋宝石"
+desc = "子弹速度提升10%"
+metadata/_custom_type_script = "uid://b1vvkdakticl5"

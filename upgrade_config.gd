@@ -19,7 +19,7 @@ var upgrade_levels: Dictionary = {
 # 规则说明：
 # - base: 第一次升级的基础值
 # - growth_type: 成长类型（"add"=固定增加值, "multiply"=乘法递增, "exponential"=指数增长）
-# - growth_value: 成长参数（如每次+2，或每次×1.1）
+# - growth_value: 成长参数（如每次+2，或每次×1.1） 这种升级的写法也不好用. 可能也是上次哪种模块化的升级会好用一些. 
 const GROWTH_RULES = {
 	UpgradeType.ATTACK_SPEED: {
 		base = 10,    # 第1次升级+5

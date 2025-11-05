@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnusodg03sg56"]
+
+[ext_resource type="Script" uid="uid://cn5wpxj6m3y51" path="res://test_item_resources/item_area_2d.gd" id="1_faxvq"]
+[ext_resource type="Resource" uid="uid://q3opmujhrqba" path="res://test_item_resources/补刀斧.tres" id="2_i0ugv"]
+
+[node name="ItemArea2d" type="Area2D"]
+script = ExtResource("1_faxvq")
+item = ExtResource("2_i0ugv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

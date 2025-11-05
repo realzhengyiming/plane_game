@@ -1,8 +1,8 @@
 extends Area2D
 
 var direction: Vector2 = Vector2.ZERO
-var speed: float = 0.0
-
+#var speed: float = 0.0
+@export var bullet_state: BulletState
 
 # 标记为子弹（供敌人识别）
 func is_bullet() -> bool:
@@ -11,10 +11,10 @@ func is_bullet() -> bool:
 func setup(start_position: Vector2, move_direction: Vector2, move_speed: float) -> void:
 	position = start_position
 	direction = move_direction
-	speed = move_speed
+	bullet_state.bullet_speed = move_speed
 
 func _process(delta: float) -> void:
-	position += direction * speed * delta
+	position += direction * bullet_state.bullet_speed * delta
 
 func _ready() -> void:
 	# 离开屏幕销毁

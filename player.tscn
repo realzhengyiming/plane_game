@@ -1,17 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://dou7iiy6wntei"]
+[gd_scene load_steps=8 format=3 uid="uid://dou7iiy6wntei"]
 
 [ext_resource type="Texture2D" uid="uid://cebls10obicuf" path="res://icon.svg" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://6dbqklgs1tt1" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="PackedScene" uid="uid://blsvlnialgt0s" path="res://bullet.tscn" id="2_i3pqv"]
+[ext_resource type="Resource" uid="uid://c7gi0nwn8qwg8" path="res://resources/attribute/player_init_plane_state.tres" id="3_hqtel"]
+[ext_resource type="Script" uid="uid://1n26541maxho" path="res://hp_bar.gd" id="5_sweqy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
 radius = 61.983868
 
+[sub_resource type="Theme" id="Theme_hqtel"]
+
 [node name="player" type="Area2D"]
 script = ExtResource("1_onrkg")
-move_speed = 500.0
 bullet_scene = ExtResource("2_i3pqv")
-bullet_speed = 1000.0
+plane_state = ExtResource("3_hqtel")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_4flbx")
@@ -19,16 +22,15 @@ texture = ExtResource("1_4flbx")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_onrkg")
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = 32.0
-offset_right = 64.0
-offset_bottom = 64.0
+[node name="hp_bar" type="ProgressBar" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -8.461081
+offset_top = 18.515514
+offset_right = 23.687433
+offset_bottom = 34.845757
 grow_horizontal = 2
-grow_vertical = 0
-max_value = 5.0
+rotation = -1.5707964
+theme = SubResource("Theme_hqtel")
+show_percentage = false
+script = ExtResource("5_sweqy")

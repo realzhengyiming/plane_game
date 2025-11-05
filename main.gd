@@ -8,6 +8,10 @@ extends Node2D
 @export var upgrade_ui_scene: PackedScene  # 升级界面,全部都是要用的时候再创建,不错不错
 @export var gameover_ui: PackedScene  # 升级界面,全部都是要用的时候再创建,不错不错
 @export var player_scene: PackedScene
+
+# 所有的属性的显示,能不能动态创建啊
+@onready var player_state_ui: VBoxContainer = $player_state
+
 var player : Area2D = null  # 后赋值
 
 var timer: float = 0.0
@@ -22,7 +26,22 @@ func _ready() -> void:
 	add_child(player)
 	
 	player.player_die_signal.connect(open_game_over_ui)  # 死了就打开gameoverr
+	player.player_state_changed.connect(_update_all_ui_label)  # 玩家属性变化,直接监听好
+	player.send_state_update_signal()  # 手动触发发现一次信号
+	#print("player_state_ui 是否存在：", player_state_ui != null)  # 应输出 true
+	#print("max_health 子节点是否存在：", player_state_ui.has_node("max_health"))  # 应输出 true
+	##print(player_state_ui.get_node("max_health").text )
+	#pass
+	
+	
+func _update_all_ui_label(state: PlaneAttribute, var_name):
+	player_state_ui.get_node("max_health").text = "max_health:" + str(state.max_health)
+	player_state_ui.get_node("current_health").text = "current_health:" + str(state.current_health)
+	player_state_ui.get_node("move_speed").text = "move_speed:" + str(state.move_speed)
+	player_state_ui.get_node("bullet_speed").text = "bullet_speed:" + str(state.bullet_speed)
+	player_state_ui.get_node("fire_rate").text = "fire_rate:" + str(state.fire_rate)
 	pass
+	
 	
 func upgrade_select(player, upgrade_type: int):
 	player.apply_upgrade(upgrade_type)
@@ -90,5 +109,5 @@ func add_score():
 		upgrade_ui.tree_exiting.connect(_on_upgrade_ui_closed)
 
 func open_game_over_ui():
-	var game_over_ui = gameover_ui.instantiate()
+	var game_over_ui = gameover_ui.instantiate()  # todo 场景之间的切换逻辑, UI 的借还逻辑应该是怎么 养的呢
 	add_child(game_over_ui)

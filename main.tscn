@@ -10,28 +10,31 @@
 [node name="main" type="Node2D" node_paths=PackedStringArray("score_label")]
 script = ExtResource("1_0xm2m")
 enemy_scene = ExtResource("2_h2yge")
-score_label = NodePath("Label")
+score_label = NodePath("player_state/Label")
 upgrade_ui_scene = ExtResource("3_lquwl")
 gameover_ui = ExtResource("4_7mycd")
 player_scene = ExtResource("1_ig7tw")
 
-[node name="Label" type="Label" parent="."]
+[node name="player_state" type="VBoxContainer" parent="."]
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="player_state"]
+layout_mode = 2
 script = ExtResource("4_1bvp3")
 
-[node name="player_hp" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="fire_rate" type="Label" parent="player_state"]
+layout_mode = 2
 
-[node name="attack" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="max_health" type="Label" parent="player_state"]
+layout_mode = 2
+text = "内容max_health"
 
-[node name="player_move_speed" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="current_health" type="Label" parent="player_state"]
+layout_mode = 2
 
-[node name="bullet_speed" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="move_speed" type="Label" parent="player_state"]
+layout_mode = 2
+
+[node name="bullet_speed" type="Label" parent="player_state"]
+layout_mode = 2

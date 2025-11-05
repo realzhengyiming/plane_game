@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cku72dj537hk2"]
+
+[ext_resource type="Script" uid="uid://cdbe3h6w833bg" path="res://测试测试模式和生命周期的写法/测试策略模式还有生命周期管理的写法.gd" id="1_ttb1b"]
+
+[node name="测试策略模式还有生命周期管理的写法" type="Node2D"]
+script = ExtResource("1_ttb1b")

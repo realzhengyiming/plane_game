@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlaneState" load_steps=2 format=3 uid="uid://c7gi0nwn8qwg8"]
+
+[ext_resource type="Script" uid="uid://dk548740q7cju" path="res://resources/attribute/plane_attribute.gd" id="1_588yk"]
+
+[resource]
+script = ExtResource("1_588yk")
+fire_rate = 0.5
+metadata/_custom_type_script = "uid://dk548740q7cju"

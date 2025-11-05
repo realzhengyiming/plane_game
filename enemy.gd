@@ -25,4 +25,5 @@ func _on_area_entered(area: Area2D) -> void:
 		health -= 1
 		if health <= 0:
 			emit_signal("enemy_destroyed")
+			# 生成 掉落物
 			queue_free()

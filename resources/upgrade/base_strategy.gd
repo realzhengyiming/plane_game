@@ -1,7 +1,7 @@
 class_name BaseStrategy
 extends Resource
 
-@export var texture: Texture = preload("res://物品_Items_-_《DOTA2》官方网站/angels_demise_png.png")
+@export var texture: Texture = preload("res://ui/物品_Items_-_《DOTA2》官方网站/angels_demise_png.png")
 @export var upgrade_name: String = "升级的模块的名字"
 @export var desc: String = "描述"  # 卡片的作用
 

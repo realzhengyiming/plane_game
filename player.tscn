@@ -1,13 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://dou7iiy6wntei"]
+[gd_scene load_steps=11 format=3 uid="uid://dou7iiy6wntei"]
 
-[ext_resource type="Texture2D" uid="uid://cebls10obicuf" path="res://icon.svg" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://6dbqklgs1tt1" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="PackedScene" uid="uid://blsvlnialgt0s" path="res://bullet.tscn" id="2_i3pqv"]
 [ext_resource type="Resource" uid="uid://c7gi0nwn8qwg8" path="res://resources/attribute/player_init_plane_state.tres" id="3_hqtel"]
+[ext_resource type="Texture2D" uid="uid://deg6l45sxflc5" path="res://models/plane_icon.png" id="4_b26j0"]
 [ext_resource type="Script" uid="uid://1n26541maxho" path="res://hp_bar.gd" id="5_sweqy"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
-radius = 61.983868
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="6_b26j0"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="7_n7ghd"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="8_nvl01"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_ivps1"]
 
 [sub_resource type="Theme" id="Theme_hqtel"]
 
@@ -17,20 +18,57 @@ bullet_scene = ExtResource("2_i3pqv")
 plane_state = ExtResource("3_hqtel")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_4flbx")
+scale = Vector2(3, 3)
+texture = ExtResource("4_b26j0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_onrkg")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-48, 24, 0, -40, 48, 24, 0, 48)
 
 [node name="hp_bar" type="ProgressBar" parent="."]
+modulate = Color(1.4517156, 0.8648601, 0.89009684, 1)
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = -8.461081
-offset_top = 18.515514
-offset_right = 23.687433
-offset_bottom = 34.845757
+offset_left = -6.2847867
+offset_top = 47.895443
+offset_right = 82.012024
+offset_bottom = 59.8731
 grow_horizontal = 2
 rotation = -1.5707964
 theme = SubResource("Theme_hqtel")
 show_percentage = false
 script = ExtResource("5_sweqy")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("6_b26j0")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="root" type="Node" parent="StateChart"]
+script = ExtResource("7_n7ghd")
+initial_state = NodePath("idle")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="idle" type="Node" parent="StateChart/root"]
+script = ExtResource("8_nvl01")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="Transition" type="Node" parent="StateChart/root/idle"]
+script = ExtResource("9_ivps1")
+to = NodePath("../../shotting")
+event = &"to_shotting"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="shotting" type="Node" parent="StateChart/root"]
+script = ExtResource("8_nvl01")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="Transition" type="Node" parent="StateChart/root/shotting"]
+script = ExtResource("9_ivps1")
+to = NodePath("../../idle")
+event = &"to_idle"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="state_entered" from="StateChart/root/shotting" to="." method="_on_shotting_state_entered"]

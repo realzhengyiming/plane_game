@@ -8,18 +8,28 @@
 atlas = ExtResource("1_v7oki")
 region = Rect2(61.36673, 62.683346, 5.506012, 14.124126)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_v8qja"]
-radius = 24.083189
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t4vbm"]
+size = Vector2(4, 16)
 
 [node name="bullet" type="Area2D"]
 script = ExtResource("1_v8qja")
-bullet_state = ExtResource("2_t4vbm")
+base_bullet_state = ExtResource("2_t4vbm")
+is_test_env = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.16078432, 0.8352941, 0.68235296, 1)
-scale = Vector2(3, 3)
+self_modulate = Color(1.3734058, 1.5229772, 1.5229772, 0.9843137)
+scale = Vector2(0.8, 1.2142857)
 texture = SubResource("AtlasTexture_v8qja")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color(1, 0.64705884, 1, 1)
-shape = SubResource("CircleShape2D_v8qja")
+shape = SubResource("RectangleShape2D_t4vbm")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 24.0
+offset_top = -28.0
+offset_right = 122.0
+offset_bottom = 28.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

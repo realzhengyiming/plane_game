@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="UpgradeBulletThrouhTimeStrategy" load_steps=3 format=3 uid="uid://bt5s43q8x4ujb"]
 
 [ext_resource type="Script" uid="uid://cpxiyxomlblxr" path="res://resources/upgrade/upgrade_bullet_through_time.gd" id="1_vseha"]
-[ext_resource type="Texture2D" uid="uid://dflpuc4pil1de" path="res://物品_Items_-_《DOTA2》官方网站/crippling_crossbow_png.png" id="2_vseha"]
+[ext_resource type="Texture2D" uid="uid://dflpuc4pil1de" path="res://ui/物品_Items_-_《DOTA2》官方网站/crippling_crossbow_png.png" id="2_vseha"]
 
 [resource]
 script = ExtResource("1_vseha")

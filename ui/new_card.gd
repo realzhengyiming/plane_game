@@ -1,4 +1,5 @@
 extends Button
+class_name CardButton
 
 @onready var upgrade_content: Label = $card_content
 @onready var card_title: RichTextLabel = $card_title
@@ -13,7 +14,6 @@ func set_card_content(upgrade: BaseStrategy):
 		# 可选：设置默认图标（需提前准备一张 default.png 放在 food_imgs 中）
 	card_face.texture = upgrade.texture  # 换图片
 	
-	
 
 # 导出变量，在编辑器中关联你的 handraw_style.tres
 @export var handraw_material: ShaderMaterial
@@ -23,7 +23,8 @@ func _ready() -> void:
 	# 可选：失去焦点时恢复原材质
 	focus_exited.connect(_focus_exit_restore)
 	#var upspeed_strategy = 
-	set_card_content(upspeed_strategy)
+	#set_card_content(upspeed_strategy)  # 调试用的
+
 
 func _focus_enter_extend() -> void:
 	print("关注了" + self.name)

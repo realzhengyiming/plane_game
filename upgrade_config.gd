@@ -1,6 +1,8 @@
 # UpgradeGrowthConfig.gd（自动加载脚本，路径：res://configs/UpgradeGrowthConfig.gd）
 extends Node
 
+static var IS_TEST_ENV: bool = true
+
 # 升级类型（与之前保持一致）
 enum UpgradeType {
 	ATTACK_SPEED,    # 攻击速度 改成按着时候就默认发射

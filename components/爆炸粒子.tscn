@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4ndwet54wiv3"]
+
+[ext_resource type="Script" uid="uid://cpurbtri6djbn" path="res://components/爆炸粒子.gd" id="1_guaow"]
+
+[sub_resource type="Curve" id="Curve_f14sx"]
+_data = [Vector2(0, 0.82809925), 0.0, 0.0, 0, 0, Vector2(0.111597374, 0.65082645), 0.0, 0.0, 0, 0, Vector2(1, 0.12438023), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+emitting = false
+amount = 60
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+angular_velocity_min = 45.0
+angular_velocity_max = 141.4
+scale_amount_max = 9.37
+scale_amount_curve = SubResource("Curve_f14sx")
+script = ExtResource("1_guaow")

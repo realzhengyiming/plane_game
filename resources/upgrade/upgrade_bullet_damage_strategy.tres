@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeBulletDamageStrategy" load_steps=3 format=3 uid="uid://bi5tnpeelwn4"]
+
+[ext_resource type="Script" uid="uid://4jkjvl15og67" path="res://resources/upgrade/upgrade_bullet_damage_strategy.gd" id="1_mb0ll"]
+[ext_resource type="Texture2D" uid="uid://vfv4cdajfalh" path="res://ui/物品_Items_-_《DOTA2》官方网站/javelin_png.png" id="2_mb0ll"]
+
+[resource]
+script = ExtResource("1_mb0ll")
+texture = ExtResource("2_mb0ll")
+upgrade_name = "子弹伤害提升"
+desc = "子弹伤害提升 0.5"
+metadata/_custom_type_script = "uid://4jkjvl15og67"

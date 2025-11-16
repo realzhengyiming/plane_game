@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemOrUpgrade" load_steps=3 format=3 uid="uid://q3opmujhrqba"]
 
 [ext_resource type="Script" uid="uid://dss6maqxxpbpj" path="res://test_item_resources/item.gd" id="1_vdtdq"]
-[ext_resource type="Texture2D" uid="uid://crnkj4ipe1a7c" path="res://物品_Items_-_《DOTA2》官方网站/quelling_blade_png.png" id="2_vdtdq"]
+[ext_resource type="Texture2D" uid="uid://crnkj4ipe1a7c" path="res://ui/物品_Items_-_《DOTA2》官方网站/quelling_blade_png.png" id="2_vdtdq"]
 
 [resource]
 script = ExtResource("1_vdtdq")

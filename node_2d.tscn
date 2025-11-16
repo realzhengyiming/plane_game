@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2cek27jlxet4"]
+
+[ext_resource type="PackedScene" uid="uid://dou7iiy6wntei" path="res://player.tscn" id="1_0e48y"]
+[ext_resource type="Script" uid="uid://dp6ughoyxf05k" path="res://node_2d.gd" id="1_epypp"]
+[ext_resource type="PackedScene" uid="uid://b5rox7tvy70lb" path="res://enemy.tscn" id="2_epypp"]
+[ext_resource type="Script" uid="uid://dsx2yntmde8ys" path="res://resources/upgrade/base_strategy.gd" id="3_0hol4"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_epypp")
+
+[node name="player" parent="." instance=ExtResource("1_0e48y")]
+position = Vector2(400, 704)
+upgrade_list = Array[ExtResource("3_0hol4")]([])
+
+[node name="enemy" parent="." instance=ExtResource("2_epypp")]
+position = Vector2(400, 328)

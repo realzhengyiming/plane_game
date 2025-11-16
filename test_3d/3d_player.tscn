@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://brvsbdmq6gqv1"]
+
+[ext_resource type="Script" uid="uid://dtymmfiqy7a22" path="res://test_3d/3d_player.gd" id="1_4kpk1"]
+[ext_resource type="ArrayMesh" uid="uid://cufaw2ubvmrpg" path="res://models/chiikawa.obj" id="1_47e1c"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4kpk1"]
+radius = 1.3261719
+
+[node name="带导航的模拟玩家" type="CharacterBody3D"]
+script = ExtResource("1_4kpk1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_47e1c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_4kpk1")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
+debug_path_custom_color = Color(1, 0.5137255, 1, 1)

@@ -43,7 +43,7 @@ func _update_all_ui_label(state: PlaneAttribute, var_name):
 	pass
 	
 	
-func upgrade_select(player, upgrade_type: int):
+func upgrade_select(player, upgrade_type: BaseStrategy):
 	player.apply_upgrade(upgrade_type)
 	print("升级完毕")
 
@@ -102,7 +102,7 @@ func add_score():
 		pass
 		get_tree().paused = true
 		var upgrade_ui = upgrade_ui_scene.instantiate()
-		upgrade_ui.upgrade_selected.connect(upgrade_select.bind(player))
+		SignalBus.upgrade_selected.connect(upgrade_select.bind(player))
 
 		add_child(upgrade_ui)
 		# 升级界面关闭后恢复游戏（可在upgrade_ui的queue_free前发送信号）

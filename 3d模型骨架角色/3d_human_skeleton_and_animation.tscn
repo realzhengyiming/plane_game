@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://wcx5b0nht48p"]
+
+[ext_resource type="PackedScene" uid="uid://dvyk0sv8jj4ks" path="res://3d模型骨架角色/Walking.fbx" id="1_h11vv"]
+[ext_resource type="AnimationLibrary" uid="uid://d38ju00qqboft" path="res://人物骨架动画/jump_animation.res" id="2_58nmt"]
+[ext_resource type="AnimationLibrary" uid="uid://cc4jajuev7vq6" path="res://人物骨架动画/walking_animation.res" id="3_apqra"]
+[ext_resource type="AnimationLibrary" uid="uid://ihuwyhf6qo8g" path="res://人物骨架动画/扫堂腿_animation.res" id="4_x8di0"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1fql0"]
+animation = &"jump_animation/mixamo_com"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bx6bx"]
+animation = &"walking/mixamo_com"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8oyhb"]
+animation = &"扫堂腿_animation/mixamo_com"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yhtuq"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_j1rea"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nrsg0"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_50n67"]
+states/Start/position = Vector2(96, 102)
+states/jump_animation_mixamo_com/node = SubResource("AnimationNodeAnimation_1fql0")
+states/jump_animation_mixamo_com/position = Vector2(388, 100)
+states/walking_mixamo_com/node = SubResource("AnimationNodeAnimation_bx6bx")
+states/walking_mixamo_com/position = Vector2(370, 31)
+"states/扫堂腿_animation_mixamo_com/node" = SubResource("AnimationNodeAnimation_8oyhb")
+"states/扫堂腿_animation_mixamo_com/position" = Vector2(395, 172)
+transitions = ["Start", "walking_mixamo_com", SubResource("AnimationNodeStateMachineTransition_yhtuq"), "Start", "jump_animation_mixamo_com", SubResource("AnimationNodeStateMachineTransition_j1rea"), "Start", "扫堂腿_animation_mixamo_com", SubResource("AnimationNodeStateMachineTransition_nrsg0")]
+
+[node name="Walking" instance=ExtResource("1_h11vv")]
+
+[node name="GeneralSkeleton" parent="." index="2"]
+bones/0/position = Vector3(-0.0015340969, 0.72859704, 0.17272666)
+bones/0/rotation = Quaternion(0.16864419, -0.502368, 0.09085045, 0.8431677)
+bones/1/rotation = Quaternion(0.2240394, 0.023704013, -0.04777866, 0.9731196)
+bones/2/rotation = Quaternion(-0.005723644, 0.0062151654, -0.017098527, 0.9998181)
+bones/3/rotation = Quaternion(-0.005623927, 0.0053156493, -0.017350106, 0.9998196)
+bones/4/rotation = Quaternion(-0.008453493, 0.011661255, -0.09494376, 0.9953785)
+bones/5/rotation = Quaternion(-0.2538017, 0.318527, -0.14668956, 0.9014475)
+bones/7/rotation = Quaternion(0.4212675, 0.52021706, 0.58608174, -0.45652616)
+bones/8/rotation = Quaternion(0.05932351, 0.73202884, -0.24046847, 0.634657)
+bones/9/rotation = Quaternion(0.45526347, -0.54105014, 0.45526364, 0.5410499)
+bones/10/rotation = Quaternion(0.07929647, 0.6617114, 0.21822466, 0.7129013)
+bones/11/rotation = Quaternion(0.5873236, -0.0011747885, -0.06926538, 0.8063821)
+bones/12/rotation = Quaternion(0.6651484, -2.7794454e-07, -0.08027041, 0.7423842)
+bones/13/rotation = Quaternion(0.18391117, 5.960511e-08, -0.022194522, 0.98269224)
+bones/15/rotation = Quaternion(0.45076174, -0.5232421, -0.5970962, -0.4080536)
+bones/16/rotation = Quaternion(-0.5954133, 0.7487854, -0.26375207, -0.12344347)
+bones/17/rotation = Quaternion(0.548878, 0.44579476, -0.5488779, 0.44579476)
+bones/18/rotation = Quaternion(0.05945289, -0.70590717, -0.19064218, 0.6795706)
+bones/19/rotation = Quaternion(0.5599768, 0.013772383, 0.047813695, 0.8270129)
+bones/20/rotation = Quaternion(0.70279753, 1.2451704e-07, 0.085648134, 0.7062153)
+bones/21/rotation = Quaternion(0.42565432, 1.1802553e-08, 0.051873457, 0.9033978)
+bones/23/rotation = Quaternion(0.17158051, 0.6163819, 0.6862717, -0.34592572)
+bones/24/rotation = Quaternion(0.06236435, 0.73045886, -0.67995846, 0.014038595)
+bones/25/rotation = Quaternion(-0.12625588, 0.6069474, -0.76932937, 0.15429439)
+bones/26/rotation = Quaternion(-1.400077e-07, 0.9998772, 0.015675105, -3.7531464e-08)
+bones/28/rotation = Quaternion(-0.09805549, 0.5229444, 0.7655493, 0.36173025)
+bones/29/rotation = Quaternion(-0.05143769, 0.79958284, -0.5896532, 0.101639956)
+bones/30/rotation = Quaternion(0.21958336, 0.5170658, -0.79425097, -0.23149845)
+bones/31/rotation = Quaternion(-1.8595235e-07, 0.9999176, 0.012842976, -4.9583385e-08)
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+&"jump_animation": ExtResource("2_58nmt"),
+&"walking": ExtResource("3_apqra"),
+&"扫堂腿_animation": ExtResource("4_x8di0")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="4"]
+tree_root = SubResource("AnimationNodeStateMachine_50n67")
+anim_player = NodePath("../AnimationPlayer")

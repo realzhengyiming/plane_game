@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ch2sksuxdxyy5"]
+[gd_scene load_steps=9 format=3 uid="uid://ch2sksuxdxyy5"]
 
 [ext_resource type="Script" uid="uid://brf3h4huawvu4" path="res://ui/card.gd" id="1_kikvd"]
-[ext_resource type="PackedScene" uid="uid://hsnbiaxrvjkm" path="res://ui/CarObj.tscn" id="2_rd5dq"]
+[ext_resource type="Script" uid="uid://dsx2yntmde8ys" path="res://resources/upgrade/base_strategy.gd" id="2_r6v5n"]
+[ext_resource type="Resource" uid="uid://bi5tnpeelwn4" path="res://resources/upgrade/upgrade_bullet_damage_strategy.tres" id="3_536d7"]
+[ext_resource type="Resource" uid="uid://dykxs5jymf6ss" path="res://resources/upgrade/upgrade_bullet_speed_strategy.tres" id="4_j3m81"]
+[ext_resource type="Resource" uid="uid://bt5s43q8x4ujb" path="res://resources/upgrade/upgrade_bullet_through_time.tres" id="5_8mxvw"]
 
 [sub_resource type="Theme" id="Theme_r6v5n"]
 
@@ -16,6 +19,7 @@ font_size = 37
 [node name="UpgradeUI" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_kikvd")
+available_select_upgrades = Array[ExtResource("2_r6v5n")]([ExtResource("3_536d7"), ExtResource("4_j3m81"), ExtResource("5_8mxvw")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -57,18 +61,6 @@ grow_vertical = 2
 [node name="SplitContainer" type="SplitContainer" parent="HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
-
-[node name="Card" parent="HBoxContainer" instance=ExtResource("2_rd5dq")]
-layout_mode = 2
-size_flags_horizontal = 2
-
-[node name="Card2" parent="HBoxContainer" instance=ExtResource("2_rd5dq")]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Card3" parent="HBoxContainer" instance=ExtResource("2_rd5dq")]
-layout_mode = 2
-size_flags_horizontal = 10
 
 [node name="SplitContainer2" type="SplitContainer" parent="HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)

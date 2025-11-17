@@ -1,43 +1,42 @@
 extends Area2D
 
 # 移动和射击参数
-@export var bullet_scene: PackedScene
-@export var plane_state: PlaneAttribute  # 资源文件可以直接用,不用实例化? 不太好set get 那就配置set get在内部,然后发信号
+@export var base_plane_state: PlaneAttribute  # 资源文件可以直接用,不用实例化? 不太好set get 那就配置set get在内部,然后发信号
+var plane_state: PlaneAttribute  # 资源文件可以直接用,不用实例化? 不太好set get 那就配置set get在内部,然后发信号
 @onready var player_sprite: Sprite2D = $Sprite2D
-@onready var hp_bar: ProgressBar = $hp_bar
-@export var upgrade_list: Array[BaseStrategy] = []  # 默认为空
-# 生命值相关
-#var current_health: int  # 当前生命值
-#signal health_changed(current, max)  # 生命值变化信号（传递当前值和最大值）
+@onready var hp_bar: ProgressBar = $hp_bar # 我也觉得,这个代码,应该抽取独立出来
 signal player_die_signal
 signal player_state_changed(plane_state: PlaneAttribute, changed_prop: String)  # 直接往外转发这个信号即可
 
 var velocity: Vector2 = Vector2.ZERO
-var last_fire_time: float = 0.0
+#var last_fire_time: float = 0.0
+@onready var shoot_component: Node2D = $shoot_component
+@onready var marker: Marker = $Marker
+
 
 
 func _ready() -> void:
+	# 同步传递
+	plane_state = base_plane_state.duplicate()  # 默认配置复制一份即可
 	plane_state.state_changed.connect(_on_plane_state_changed)
-	area_entered.connect(_on_enemy_collision)
-	# 直接转发自身属性变化的信号
+		# 直接转发自身属性变化的信号
 	plane_state.state_changed.connect(player_state_changed.emit)  # 这个真强,真好用
-	
+	#shoot_component.plane_state = plane_state
+
+	area_entered.connect(_on_enemy_collision)
+
 	# 初始化血条
 	emit_signal("player_state_changed", plane_state, "max_health")  # 所有都改了
 	hp_bar.max_value = plane_state.max_health
 	hp_bar.value = plane_state.current_health
-	SignalBus.upgrade_selected.connect(add_upgrade_strategies)
-	
-func add_upgrade_strategies(strategry: BaseStrategy):
-	upgrade_list.append(strategry)
-
+	#SignalBus.upgrade_selected.connect(add_upgrade_strategies)
 	
 func send_state_update_signal():
 	emit_signal("player_state_changed", plane_state, "max_health")  # 所有都改了
 
-	
 # 1个回调处理所有属性变化
 func _on_plane_state_changed(updated_state: PlaneAttribute, changed_prop: String):
+	#shoot_component.plane_state = updated_state
 	# 根据属性名判断要处理的逻辑
 	match changed_prop:
 		"max_health":
@@ -61,10 +60,8 @@ func _on_plane_state_changed(updated_state: PlaneAttribute, changed_prop: String
 
 func _process(delta: float) -> void:
 	handle_movement(delta)
-	handle_shooting(delta)
 	print(get_top_level_active_states($StateChart.get_node("root")))
 	
-	print("upgrade_list" + str(upgrade_list.size()))
 
 func handle_movement(delta: float) -> void:
 	# 计算移动向量
@@ -89,31 +86,6 @@ func clamp_to_screen() -> void:
 	position.x = clamp(position.x, min_x, max_x)
 	position.y = clamp(position.y, min_y, max_y)
 
-
-func handle_shooting(delta: float) -> void:
-	if Input.is_action_pressed("j"):
-		var current_time = Time.get_ticks_msec() / 1000.0
-		if current_time > last_fire_time + plane_state.fire_rate:
-			fire_bullet()
-			last_fire_time = current_time
-
-
-func fire_bullet() -> void:
-	if not bullet_scene:
-		return
-		
-	var bullet = bullet_scene.instantiate()
-	if bullet.has_method("setup"):
-		get_parent().add_child(bullet)
-		
-		var bullet_position = position - Vector2(0, 50)
-		bullet.setup(bullet_position, Vector2.UP)
-		
-		for upgrade_obj in upgrade_list:  # todo  有问题, 突然难用起来
-			upgrade_obj.apply_upgrade(bullet.bullet_state)  # 对子弹的属性做升级操作
-		#get_parent().add_child(bullet)
-
-
 # 处理与敌人的碰撞
 func _on_enemy_collision(area: Area2D) -> void:
 	# 假设敌人节点有"is_enemy"方法用于标识（需在敌人脚本中定义）
@@ -123,8 +95,6 @@ func _on_enemy_collision(area: Area2D) -> void:
 # 掉血逻辑
 func take_damage(amount: int) -> void:
 	plane_state.current_health = max(0, plane_state.current_health - amount)  # 确保血量不小于0
-	#emit_signal("health_changed", plane_state.current_health, plane_state.max_health)  # 发射生命值变化信号
-		
 	if plane_state.current_health  <= 0:
 		die()  # 血量为0时死亡
 
@@ -135,11 +105,6 @@ func die() -> void:
 	print("玩家死亡！")
 	queue_free()  # 暂时简单处理：销毁玩家
 
-
-# 应用升级（根据类型计算当前等级对应的数值）
-func apply_upgrade(upgrade: BaseStrategy) -> void:
-	# 升级等级+1
-	upgrade_list.append(upgrade)
 # 状态切换控制
 
 ## 收集所有激活的状态节点，返回包含路径和名称的列表

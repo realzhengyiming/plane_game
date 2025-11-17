@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://ck46yeej1hmtf"]
+
+[ext_resource type="Script" uid="uid://cjkivmmb2o3ah" path="res://resources/components/shoot_component.gd" id="1_1rtt0"]
+[ext_resource type="PackedScene" uid="uid://blsvlnialgt0s" path="res://bullet.tscn" id="2_u5p8e"]
+[ext_resource type="Resource" uid="uid://qawokhnnmx6o" path="res://resources/attribute/base_weapon_attribute.tres" id="3_hsm3w"]
+
+[node name="shoot_component" type="Node2D"]
+script = ExtResource("1_1rtt0")
+bullet_scene = ExtResource("2_u5p8e")
+weapon_attr = ExtResource("3_hsm3w")

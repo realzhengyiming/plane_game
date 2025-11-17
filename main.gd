@@ -38,8 +38,8 @@ func _update_all_ui_label(state: PlaneAttribute, var_name):
 	player_state_ui.get_node("max_health").text = "max_health:" + str(state.max_health)
 	player_state_ui.get_node("current_health").text = "current_health:" + str(state.current_health)
 	player_state_ui.get_node("move_speed").text = "move_speed:" + str(state.move_speed)
-	player_state_ui.get_node("bullet_speed").text = "bullet_speed:" + str(state.bullet_speed)
-	player_state_ui.get_node("fire_rate").text = "fire_rate:" + str(state.fire_rate)
+	#player_state_ui.get_node("bullet_speed").text = "bullet_speed:" + str(state.bullet_speed)
+	#player_state_ui.get_node("fire_rate").text = "fire_rate:" + str(state.fire_rate)
 	pass
 	
 	
@@ -86,7 +86,9 @@ func spawn_enemy() -> void:
 	
 	var enemy = enemy_scene.instantiate() as Area2D
 	enemy.position.y = spawn_y_position
-	add_child(enemy)
+	get_node("enemies").add_child(enemy)
+	enemy.name = "enemy:" + enemy.name
+
 	enemy.enemy_destroyed.connect(score_label.add_score)
 	enemy.enemy_destroyed.connect(add_score)
 	print("score_label score: " + str(score_label.score))

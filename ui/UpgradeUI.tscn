@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ch2sksuxdxyy5"]
+[gd_scene load_steps=10 format=3 uid="uid://ch2sksuxdxyy5"]
 
 [ext_resource type="Script" uid="uid://brf3h4huawvu4" path="res://ui/card.gd" id="1_kikvd"]
 [ext_resource type="Script" uid="uid://dsx2yntmde8ys" path="res://resources/upgrade/base_strategy.gd" id="2_r6v5n"]
 [ext_resource type="Resource" uid="uid://bi5tnpeelwn4" path="res://resources/upgrade/upgrade_bullet_damage_strategy.tres" id="3_536d7"]
 [ext_resource type="Resource" uid="uid://dykxs5jymf6ss" path="res://resources/upgrade/upgrade_bullet_speed_strategy.tres" id="4_j3m81"]
 [ext_resource type="Resource" uid="uid://bt5s43q8x4ujb" path="res://resources/upgrade/upgrade_bullet_through_time.tres" id="5_8mxvw"]
+[ext_resource type="Resource" uid="uid://b1wvna7le2v0u" path="res://resources/upgrade/upgrade_player_move_speed.tres" id="6_536d7"]
 
 [sub_resource type="Theme" id="Theme_r6v5n"]
 
@@ -19,7 +20,7 @@ font_size = 37
 [node name="UpgradeUI" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_kikvd")
-available_select_upgrades = Array[ExtResource("2_r6v5n")]([ExtResource("3_536d7"), ExtResource("4_j3m81"), ExtResource("5_8mxvw")])
+available_select_upgrades = Array[ExtResource("2_r6v5n")]([ExtResource("3_536d7"), ExtResource("4_j3m81"), ExtResource("5_8mxvw"), ExtResource("6_536d7")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15

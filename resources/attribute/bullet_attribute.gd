@@ -1,5 +1,5 @@
 # PlaneState.gd（Godot 4.x 新语法版）
-extends Resource
+extends BaseAttribute
 class_name BulletAttribute
 
 # 1. 单个信号：携带「资源实例」和「变化的属性名」（方便外部判断）

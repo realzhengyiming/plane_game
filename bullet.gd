@@ -31,7 +31,7 @@ func is_bullet() -> bool:
 	return true
 
 func setup(start_position: Vector2, move_direction: Vector2) -> void:
-	position = start_position
+	global_position = start_position
 	direction = move_direction
 	#bullet_state.bullet_speed = move_speed
 	label.text = "damage:" + str(bullet_state.bullet_damage)
@@ -39,7 +39,7 @@ func setup(start_position: Vector2, move_direction: Vector2) -> void:
 	label.text += "\n" + "cross:" + str(bullet_state.through_times)
 
 func _process(delta: float) -> void:
-	position += direction * bullet_state.bullet_speed * delta
+	global_position += direction * bullet_state.bullet_speed * delta
 
 
 func _on_area_entered(area: Area2D) -> void:  # 自己链接自己

@@ -1,11 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5rox7tvy70lb"]
+[gd_scene load_steps=7 format=3 uid="uid://b5rox7tvy70lb"]
 
 [ext_resource type="Script" uid="uid://d3mxvbygkymgl" path="res://enemy.gd" id="1_4gyqm"]
 [ext_resource type="Texture2D" uid="uid://deg6l45sxflc5" path="res://models/plane_icon.png" id="2_4gyqm"]
-[ext_resource type="PackedScene" uid="uid://d4ndwet54wiv3" path="res://components/爆炸粒子.tscn" id="3_qi2p4"]
+[ext_resource type="Script" uid="uid://1tlxrtpo232m" path="res://gpu_particles_2d.gd" id="3_iifgy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iifgy"]
 radius = 12.7758465
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_epg4t"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 4
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3yqyl"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 0.01
+spread = 180.0
+initial_velocity_min = 82.92
+initial_velocity_max = 155.9
+gravity = Vector3(0, 98, 0)
+anim_offset_max = 1.0
 
 [node name="enemy" type="Area2D" groups=["enemy"]]
 modulate = Color(0.76327986, 0.28711003, 0.3232964, 1)
@@ -21,8 +37,15 @@ texture = ExtResource("2_4gyqm")
 position = Vector2(-0.33333334, 3.6666667)
 shape = SubResource("CircleShape2D_iifgy")
 
-[node name="爆炸粒子" parent="." instance=ExtResource("3_qi2p4")]
-position = Vector2(3.2055016e-07, 3.6666667)
-scale = Vector2(5, 5)
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_epg4t")
+emitting = false
+amount = 20
+texture = ExtResource("2_4gyqm")
+lifetime = 0.09999999999999999
+one_shot = true
+collision_base_size = 0.0
+process_material = SubResource("ParticleProcessMaterial_3yqyl")
+script = ExtResource("3_iifgy")
 
 [connection signal="tree_exited" from="." to="." method="_after_die"]

@@ -19,6 +19,8 @@ player_scene = ExtResource("1_ig7tw")
 [node name="star_bg" parent="." instance=ExtResource("6_272bh")]
 visible = false
 
+[node name="enemies" type="Node2D" parent="."]
+
 [node name="player_state" type="VBoxContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0

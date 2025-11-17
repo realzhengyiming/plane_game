@@ -1,21 +1,24 @@
-[gd_scene load_steps=11 format=3 uid="uid://dou7iiy6wntei"]
+[gd_scene load_steps=12 format=3 uid="uid://dou7iiy6wntei"]
 
 [ext_resource type="Script" uid="uid://6dbqklgs1tt1" path="res://player.gd" id="1_onrkg"]
-[ext_resource type="PackedScene" uid="uid://blsvlnialgt0s" path="res://bullet.tscn" id="2_i3pqv"]
-[ext_resource type="Resource" uid="uid://c7gi0nwn8qwg8" path="res://resources/attribute/player_init_plane_state.tres" id="3_hqtel"]
+[ext_resource type="Script" uid="uid://dk548740q7cju" path="res://resources/attribute/plane_attribute.gd" id="3_b26j0"]
 [ext_resource type="Texture2D" uid="uid://deg6l45sxflc5" path="res://models/plane_icon.png" id="4_b26j0"]
 [ext_resource type="Script" uid="uid://1n26541maxho" path="res://hp_bar.gd" id="5_sweqy"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="6_b26j0"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="7_n7ghd"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="8_nvl01"]
+[ext_resource type="PackedScene" uid="uid://ck46yeej1hmtf" path="res://resources/components/shoot_component.tscn" id="9_b26j0"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_ivps1"]
+
+[sub_resource type="Resource" id="Resource_n7ghd"]
+script = ExtResource("3_b26j0")
+metadata/_custom_type_script = "uid://dk548740q7cju"
 
 [sub_resource type="Theme" id="Theme_hqtel"]
 
 [node name="player" type="Area2D"]
 script = ExtResource("1_onrkg")
-bullet_scene = ExtResource("2_i3pqv")
-plane_state = ExtResource("3_hqtel")
+base_plane_state = SubResource("Resource_n7ghd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(3, 3)
@@ -68,6 +71,13 @@ to = NodePath("../../idle")
 event = &"to_idle"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -40)
+
+[node name="shoot_component" parent="." instance=ExtResource("9_b26j0")]
+position = Vector2(0, -40)
+marker2d_path = NodePath("../Marker2D")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

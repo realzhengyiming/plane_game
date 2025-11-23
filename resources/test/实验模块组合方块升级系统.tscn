@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://wh5wrsbtejv7"]
+[gd_scene load_steps=3 format=3 uid="uid://wh5wrsbtejv7"]
+
+[ext_resource type="Script" path="res://resources/test/module_test_controller.gd" id="1_test"]
+[ext_resource type="PackedScene" uid="uid://lxd4gdjehao6" path="res://resources/test/base_module.tscn" id="2_module"]
 
 [node name="实验模块组合方块升级系统" type="Node2D"]
+script = ExtResource("1_test")
+root_module_scene = ExtResource("2_module")

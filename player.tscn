@@ -12,6 +12,7 @@
 
 [sub_resource type="Resource" id="Resource_n7ghd"]
 script = ExtResource("3_b26j0")
+move_speed = 500.0
 metadata/_custom_type_script = "uid://dk548740q7cju"
 
 [sub_resource type="Theme" id="Theme_hqtel"]

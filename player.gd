@@ -12,17 +12,17 @@ var velocity: Vector2 = Vector2.ZERO
 #var last_fire_time: float = 0.0
 @onready var shoot_component: Node2D = $shoot_component
 @onready var marker: Marker = $Marker
-
+var plane_upgraded_list: Array[BaseStrategy]  # 挑选出角色的, 来了就升级一次
 
 
 func _ready() -> void:
 	# 同步传递
 	plane_state = base_plane_state.duplicate()  # 默认配置复制一份即可
 	plane_state.state_changed.connect(_on_plane_state_changed)
-		# 直接转发自身属性变化的信号
+	# 直接转发自身属性变化的信号
 	plane_state.state_changed.connect(player_state_changed.emit)  # 这个真强,真好用
 	#shoot_component.plane_state = plane_state
-
+	SignalBus.upgrade_selected.connect(upgrade_character)  # 也注册了 这个升级的
 	area_entered.connect(_on_enemy_collision)
 
 	# 初始化血条
@@ -31,6 +31,14 @@ func _ready() -> void:
 	hp_bar.value = plane_state.current_health
 	#SignalBus.upgrade_selected.connect(add_upgrade_strategies)
 	
+func upgrade_character(strategy: BaseStrategy):
+	if strategy is BasePlaneStrategy:
+		print("执行了升级" + str(strategy.upgrade_name))
+		plane_upgraded_list.append(strategy)
+		strategy.apply_upgrade(base_plane_state)  # 为什么plane state 变了, 没有发生变化 todo 很奇怪, 这儿升级了速度没有发信号
+		pass
+
+	
 func send_state_update_signal():
 	emit_signal("player_state_changed", plane_state, "max_health")  # 所有都改了
 
@@ -38,7 +46,8 @@ func send_state_update_signal():
 func _on_plane_state_changed(updated_state: PlaneAttribute, changed_prop: String):
 	#shoot_component.plane_state = updated_state
 	# 根据属性名判断要处理的逻辑
-	match changed_prop:
+	# 为什么速度改了没有更新label
+a	match changed_prop:
 		"max_health":
 			# 生命值上限变化：同步当前血量+更新进度条
 			#current_health = updated_state.max_healthx

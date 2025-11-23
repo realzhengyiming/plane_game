@@ -3,7 +3,7 @@ extends Area2D
 
 # 已有的属性...
 @export var fall_speed: float = 150.0
-@export var health: int = 2
+@export var health: float = 2
 #@export var spawn_range: Vector2
 signal enemy_destroyed()
 @onready var exploed_node: GPUParticles2D = $GPUParticles2D

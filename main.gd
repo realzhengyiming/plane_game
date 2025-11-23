@@ -24,7 +24,7 @@ func _ready() -> void:
 	player.position = get_player_spawn_position(player)
 	# 放置到屏幕下方的中间位置
 	add_child(player)
-	
+
 	player.player_die_signal.connect(open_game_over_ui)  # 死了就打开gameoverr
 	player.player_state_changed.connect(_update_all_ui_label)  # 玩家属性变化,直接监听好
 	player.send_state_update_signal()  # 手动触发发现一次信号

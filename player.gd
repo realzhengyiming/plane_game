@@ -35,7 +35,7 @@ func upgrade_character(strategy: BaseStrategy):
 	if strategy is BasePlaneStrategy:
 		print("执行了升级" + str(strategy.upgrade_name))
 		plane_upgraded_list.append(strategy)
-		strategy.apply_upgrade(base_plane_state)  # 为什么plane state 变了, 没有发生变化 todo 很奇怪, 这儿升级了速度没有发信号
+		strategy.apply_upgrade(plane_state)  # 为什么plane state 变了, 没有发生变化 todo 很奇怪, 这儿升级了速度没有发信号
 		pass
 
 	
@@ -47,7 +47,7 @@ func _on_plane_state_changed(updated_state: PlaneAttribute, changed_prop: String
 	#shoot_component.plane_state = updated_state
 	# 根据属性名判断要处理的逻辑
 	# 为什么速度改了没有更新label
-a	match changed_prop:
+	match changed_prop:
 		"max_health":
 			# 生命值上限变化：同步当前血量+更新进度条
 			#current_health = updated_state.max_healthx

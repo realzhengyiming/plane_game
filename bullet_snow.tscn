@@ -20,7 +20,6 @@ scale = Vector2(0.949, 1)
 texture = SubResource("AtlasTexture_b01mi")
 
 [node name="CollisionShape2D" parent="." index="1"]
-visible = false
 shape = SubResource("CircleShape2D_wm1gl")
 
 [node name="sprite_rotation" type="Node2D" parent="." index="3"]

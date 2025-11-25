@@ -26,7 +26,7 @@ func _ready() -> void:
 func rota_direction():
 	# 按照每0.5s旋转多少弧
 	print("宣传了角度")
-	direction = direction.rotated(deg_to_rad(10))  # 还是说直接自己转了，
+	direction = direction.rotated(deg_to_rad(20))  # 还是说直接自己转了，
 
 
 func fire_bullet() -> void:
@@ -44,7 +44,7 @@ func fire_bullet() -> void:
 		#var bullet_position = position - Vdector2(0, 50)
 		print("direction", direction)
 		bullet.setup(bullet_position, direction, group_name)
-		bullet.bullet_state.bullet_speed = 100
+		bullet.bullet_state.bullet_speed = 200
 		bullet.wave_amplitude = 50
 		
 		bullet.wave_frequency = 0.5

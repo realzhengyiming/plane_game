@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dob2fdfcq8ecu"]
+
+[ext_resource type="PackedScene" uid="uid://blsvlnialgt0s" path="res://bullet.tscn" id="1_4tfdt"]
+[ext_resource type="Texture2D" uid="uid://1vh17ltie0ry" path="res://test_bullet_heavn/imgi_356_450px-Dota_2_Monster_Hunter_codex_ancient_apparition_gameasset.png" id="2_mk8dk"]
+[ext_resource type="Script" uid="uid://d3lpbvs50acyn" path="res://test_bullet_heavn/sprite_rotation.gd" id="3_4pefm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b01mi"]
+atlas = ExtResource("2_mk8dk")
+region = Rect2(186.747, 376.6965, 29.442398, 28.490143)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wm1gl"]
+radius = 12.0
+
+[node name="bullet" instance=ExtResource("1_4tfdt")]
+
+[node name="Sprite2D" parent="." index="0"]
+modulate = Color(1, 1, 1, 1)
+position = Vector2(-1.1920929e-07, 1.4210855e-14)
+scale = Vector2(0.949, 1)
+texture = SubResource("AtlasTexture_b01mi")
+
+[node name="CollisionShape2D" parent="." index="1"]
+visible = false
+shape = SubResource("CircleShape2D_wm1gl")
+
+[node name="sprite_rotation" type="Node2D" parent="." index="3"]
+script = ExtResource("3_4pefm")
+
+[node name="Timer" type="Timer" parent="sprite_rotation" index="0"]
+wait_time = 0.5
+autostart = true

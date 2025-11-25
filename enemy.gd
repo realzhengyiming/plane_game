@@ -1,4 +1,3 @@
-@tool
 extends Area2D
 
 # 已有的属性...
@@ -10,6 +9,7 @@ signal enemy_destroyed()
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @export var spawn_x_offset: float = 50.0  # 左右边距（防止敌机一半在屏幕外）
+@export var group_name:String = UpgradeConfig.IS_ENEMY
 
 # 新增：标识自身为敌人（供玩家碰撞检测）
 func is_enemy() -> bool:

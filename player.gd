@@ -13,7 +13,7 @@ var velocity: Vector2 = Vector2.ZERO
 @onready var shoot_component: Node2D = $shoot_component
 @onready var marker: Marker = $Marker
 var plane_upgraded_list: Array[BaseStrategy]  # 挑选出角色的, 来了就升级一次
-
+@export var group_name:String = UpgradeConfig.IS_PLAYER
 
 func _ready() -> void:
 	# 同步传递

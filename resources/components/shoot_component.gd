@@ -8,12 +8,16 @@ var last_fire_time: float = 0.0
 @export var weapon_attr: WeaponAtribute
 @onready var shoot_component: Node2D = $shoot_component
 @export_node_path("Marker2D") var marker2d_path: NodePath  # 选择节点后存储路径
+@export_node_path("Node2D") var owner_path: NodePath  # 选择节点后存储路径
+var owner_node: Node2D  # owner一定要 有一个 本身属性分组名属性
 var spwan_bullet_mark: Marker2D
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SignalBus.upgrade_selected.connect(add_upgrade_strategies)
 	spwan_bullet_mark = get_node(marker2d_path)
+	owner_node = get_node(owner_path)
 	
 func add_upgrade_strategies(strategry: BaseStrategy):
 	upgrade_list.append(strategry)
@@ -42,7 +46,7 @@ func fire_bullet() -> void:
 
 		var bullet_position = spwan_bullet_mark.global_position #- Vector2(0, 50)
 		#var bullet_position = position - Vdector2(0, 50)
-		bullet.setup(bullet_position, Vector2.UP)
+		bullet.setup(bullet_position, Vector2.UP, owner_node.group_name)
 		
 		for upgrade_obj in upgrade_list:  # todo  有问题, 突然难用起来
 			if upgrade_obj is BaseBulletStrategy:

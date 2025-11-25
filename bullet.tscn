@@ -14,7 +14,7 @@ size = Vector2(4, 16)
 [node name="bullet" type="Area2D"]
 script = ExtResource("1_v8qja")
 base_bullet_state = ExtResource("2_t4vbm")
-is_test_env = true
+is_test_env = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.16078432, 0.8352941, 0.68235296, 1)

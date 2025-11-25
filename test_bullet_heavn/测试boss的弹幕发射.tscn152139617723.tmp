@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://boi71myiutumd"]
+
+[ext_resource type="Texture2D" uid="uid://1vh17ltie0ry" path="res://test_bullet_heavn/imgi_356_450px-Dota_2_Monster_Hunter_codex_ancient_apparition_gameasset.png" id="1_w5nqj"]
+[ext_resource type="Script" uid="uid://dy602hf7vey11" path="res://test_bullet_heavn/boss_bullet_gd.gd" id="2_qvknu"]
+[ext_resource type="PackedScene" uid="uid://blsvlnialgt0s" path="res://bullet.tscn" id="3_qvknu"]
+
+[node name="测试boss的弹幕发射" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(917, 228)
+texture = ExtResource("1_w5nqj")
+script = ExtResource("2_qvknu")
+bullet_scene = ExtResource("3_qvknu")
+
+[node name="Marker2D" type="Marker2D" parent="Sprite2D"]
+position = Vector2(-2, 109)
+
+[node name="shoot_timer" type="Timer" parent="Sprite2D"]
+wait_time = 0.009999999999999998
+autostart = true
+
+[node name="rotation_timer" type="Timer" parent="Sprite2D"]
+wait_time = 0.030000000000000002
+autostart = true

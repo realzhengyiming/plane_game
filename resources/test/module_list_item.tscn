@@ -1,10 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://module_list_item"]
-
-[ext_resource type="Script" path="res://resources/test/module_list_item.gd" id="1_item"]
+[gd_scene format=3 uid="uid://cs3r307bskqb0"]
 
 [node name="ModuleListItem" type="Control"]
-layout_mode = 2
 custom_minimum_size = Vector2(0, 60)
+layout_mode = 3
+anchors_preset = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -19,8 +18,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ModulePreview" type="TextureRect" parent="HBoxContainer"]
-layout_mode = 2
 custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 

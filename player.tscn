@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://dk548740q7cju"
 
 [sub_resource type="Theme" id="Theme_hqtel"]
 
-[node name="player" type="Area2D"]
+[node name="player" type="Area2D" groups=["player"]]
 script = ExtResource("1_onrkg")
 base_plane_state = SubResource("Resource_n7ghd")
 

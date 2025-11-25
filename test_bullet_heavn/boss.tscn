@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://cwkjdfb8lyjal"]
+
+[ext_resource type="Script" uid="uid://dy602hf7vey11" path="res://test_bullet_heavn/boss_bullet_gd.gd" id="1_xvva3"]
+[ext_resource type="PackedScene" path="res://bullet_snow.tscn" id="2_711dr"]
+[ext_resource type="Texture2D" uid="uid://1vh17ltie0ry" path="res://test_bullet_heavn/imgi_356_450px-Dota_2_Monster_Hunter_codex_ancient_apparition_gameasset.png" id="3_gc5y4"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="4_p2x32"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="5_1cl77"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="6_0rqj8"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="7_7q280"]
+
+[node name="Boss" type="Area2D"]
+script = ExtResource("1_xvva3")
+bullet_scene = ExtResource("2_711dr")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-2.75, 6.529999)
+polygon = PackedVector2Array(-69, -224.7, -69, -218.8, -80.399994, -209, -84.2, -209, -83.100006, -180.4, -115, -205.1, -115, -208, -135.5, -208, -141, -196.9, -141, -192.6, -134.9, -158.4, -181, -191.1, -181, -193.7, -197.8, -195, -202.9, -195, -207, -182.6, -207, -176.9, -192.2, -153.1, -199.2, -141, -203.4, -141, -199.4, -128.1, -204, -131.1, -204, -132.7, -208.9, -134.7, -219.6, -124, -223.3, -124, -222, -106.7, -222, -102, -187, -39, -187, -35.100006, -147, -21.5, -153, -13.300003, -153, -12.199997, -180.3, 5, -188, 1.3999939, -188, 0.6000061, -192.2, -1.699997, -202.2, 5, -205.9, 5, -208, 133, -208, 138.20001, -172, 195.1, -172, 198.6, -132, 215.6, -132, 218, -86, 218, -86, 198.70001, -94.3, 193.9, -93.100006, 194, -50.300003, 194, -40.899994, 184.5, -37, 187.1, -37, 190, -12.5, 190, -4.5, 183, -1.699997, 183, -1.6000061, 182.29999, -1, 193.20001, -1, 197.9, 20.399994, 205, 26.899994, 205, 40, 188.4, 40, 183.6, 47, 190.6, 47, 194.1, 93.100006, 193, 95.20001, 193, 88.899994, 197, 83.79999, 197, 89, 216.6, 89, 221.4, 124.399994, 218, 128.79999, 218, 162.9, 203, 166.29999, 203, 205.29999, 138, 208, 138, 207, 22, 207, 11.199997, 197, 2.100006, 197, 0.5, 192.4, -1.699997, 181.4, 7.199997, 149, -19, 150.9, -19, 181.70001, -33, 184.5, -33, 219.5, -102, 223.20001, -102, 216, -128.8, 216, -133.5, 202.6, -132, 201, -132, 201, -140.3, 191.1, -154.2, 204.20001, -175, 208.1, -175, 204, -191.6, 204, -196, 185.70001, -196, 133.9, -157.1, 139, -200.8, 139, -206.4, 122.29999, -209, 118.600006, -209, 83.20001, -180.8, 84, -199.9, 84, -205.8, 65.5, -222, 61.899994, -222, 53.899994, -217, 51.600006, -217, 38.600006, -193, 36, -193, 36, -157.4, 28, -173.9, 28, -177.8, 6, -185.9, 6, -188.7, -17.600006, -185, -21.300003, -185, -35.899994, -159.4, -37, -186.2, -37, -191.2, -50, -211.3, -50, -214.4)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2.75, 6.529999)
+texture = ExtResource("3_gc5y4")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-4.75, 115.53)
+
+[node name="shoot_timer" type="Timer" parent="."]
+wait_time = 0.00999999999999999
+autostart = true
+
+[node name="rotation_timer" type="Timer" parent="."]
+wait_time = 0.03
+autostart = true
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("4_p2x32")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="root" type="Node" parent="StateChart"]
+script = ExtResource("5_1cl77")
+initial_state = NodePath("hp_full")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="hp_full" type="Node" parent="StateChart/root"]
+script = ExtResource("6_0rqj8")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="Transition" type="Node" parent="StateChart/root/hp_full"]
+script = ExtResource("7_7q280")
+to = NodePath("../../hp_half")
+event = &"to_hp_half"
+delay_in_seconds = "0.0"
+
+[node name="hp_half" type="Node" parent="StateChart/root"]
+script = ExtResource("6_0rqj8")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="Transition" type="Node" parent="StateChart/root/hp_half"]
+script = ExtResource("7_7q280")
+to = NodePath("../../hp_full")
+event = &"to_hp_full"
+delay_in_seconds = "0.0"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -203.75
+offset_top = 226.53
+offset_right = 202.25
+offset_bottom = 253.53
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="state_entered" from="StateChart/root/hp_full" to="." method="_on_hp_full_state_entered"]

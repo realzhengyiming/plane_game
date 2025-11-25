@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5sf1o02tewn1"]
+
+[ext_resource type="Texture2D" uid="uid://c4gbwerrvcpsp" path="res://Dota 2 X Monster Hunter_Hero Atlas - Liquipedia Dota 2 Wiki/imgi_380_450px-Dota_2_Monster_Hunter_codex_broodmother_gameasset.png" id="1_x1h2v"]
+[ext_resource type="Script" uid="uid://cn24xg6k2irsh" path="res://test_scene/boss_shoot.gd" id="2_xjfrl"]
+[ext_resource type="PackedScene" uid="uid://blsvlnialgt0s" path="res://bullet.tscn" id="3_xjfrl"]
+
+[node name="测试弹幕boss场景" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(896, 456)
+texture = ExtResource("1_x1h2v")
+
+[node name="弹幕发射模块" type="Node2D" parent="Sprite2D"]
+position = Vector2(-928, -488)
+script = ExtResource("2_xjfrl")
+bullet_scene = ExtResource("3_xjfrl")
+
+[node name="Marker2D" type="Marker2D" parent="Sprite2D/弹幕发射模块"]
+position = Vector2(928, 568)
+
+[node name="shot_timer" type="Timer" parent="Sprite2D/弹幕发射模块"]
+wait_time = 0.009999999999999998
+autostart = true
+
+[node name="rotate_timer" type="Timer" parent="Sprite2D/弹幕发射模块"]
+wait_time = 0.1
+autostart = true

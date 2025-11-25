@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cs3r307bskqb0"]
+[gd_scene load_steps=0 format=3 uid="uid://cs3r307bskqb0"]
 
 [node name="ModuleListItem" type="Control"]
 custom_minimum_size = Vector2(0, 60)

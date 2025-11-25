@@ -7,11 +7,16 @@ var direction: Vector2 = Vector2.DOWN
 @export var group_name:String = UpgradeConfig.IS_ENEMY
 var hp: float = 1000: set = set_hp
 @onready var progress_bar: ProgressBar = $ProgressBar
+@onready var root: CompoundState = $StateChart/root
+@onready var state_chart: StateChart = $StateChart
 
+@export var max_health = 4
 
 func set_hp(value):
 	hp = value
 	progress_bar.value = value
+	if hp <= max_health / 2:
+		state_chart.send_event("to_hp_half")
 
 func _ready() -> void:
 	shoot_timer.autostart = true
@@ -19,9 +24,18 @@ func _ready() -> void:
 	
 	shoot_timer.timeout.connect(fire_bullet)
 	rotation_timer.timeout.connect(rota_direction)
-	progress_bar.max_value = 1000
-	hp = 1000
+	progress_bar.max_value = max_health
+	hp = max_health
+	
+# boss 的攻击还是要设计一下的
 
+func get_player_position():
+	# 游戏开始时查找一次玩家并缓存引用
+	var players = get_tree().get_nodes_in_group("player")
+	if not players.is_empty():
+		var player = players[0]
+		return player.global_position
+	return
 
 func rota_direction():
 	# 按照每0.5s旋转多少弧
@@ -30,6 +44,10 @@ func rota_direction():
 
 
 func fire_bullet() -> void:
+	print(UpgradeConfig.get_top_level_active_states(root))
+	if UpgradeConfig.get_top_level_active_states(root) != "hp_half":
+		return
+	
 	print("进来发射了")
 
 	if not bullet_scene:
@@ -51,8 +69,13 @@ func fire_bullet() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	# 被子弹打了，就扣血
+		# 被子弹打了，就扣血 半血就发疯
 	pass # Replace with function body.
 	if area.is_in_group("player"):
 		print("玩家的子弹进来了")
 		hp -= area.bullet_state.bullet_damage
+
+
+func _on_hp_full_state_entered() -> void:
+	pass # Replace with function body.
+	print("现在是血量第一阶段")

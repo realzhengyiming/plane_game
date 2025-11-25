@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://r3k0bdc1bu5l"]
+[gd_scene load_steps=9 format=3 uid="uid://r3k0bdc1bu5l"]
 
 [ext_resource type="Script" uid="uid://dv773qpsfiebj" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://dou7iiy6wntei" path="res://player.tscn" id="1_ig7tw"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ch2sksuxdxyy5" path="res://ui/UpgradeUI.tscn" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://crf4nq12bhxdd" path="res://score_label.gd" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://by3y2w6ei4e1n" path="res://ui/game_over_ui.tscn" id="4_7mycd"]
+[ext_resource type="PackedScene" uid="uid://cwkjdfb8lyjal" path="res://test_bullet_heavn/boss.tscn" id="6_5vw27"]
 [ext_resource type="PackedScene" uid="uid://d1fyhavepyt0r" path="res://components/star_bg.tscn" id="6_272bh"]
 
 [node name="main" type="Node2D" node_paths=PackedStringArray("score_label")]
@@ -15,11 +16,19 @@ score_label = NodePath("player_state/Label")
 upgrade_ui_scene = ExtResource("3_lquwl")
 gameover_ui = ExtResource("4_7mycd")
 player_scene = ExtResource("1_ig7tw")
+boss_scene = ExtResource("6_5vw27")
 
 [node name="star_bg" parent="." instance=ExtResource("6_272bh")]
-visible = false
 
 [node name="enemies" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 35.0
+one_shot = true
+autostart = true
+
+[node name="per_second" type="Timer" parent="."]
+autostart = true
 
 [node name="player_state" type="VBoxContainer" parent="."]
 offset_right = 40.0
@@ -44,3 +53,9 @@ layout_mode = 2
 
 [node name="bullet_speed" type="Label" parent="player_state"]
 layout_mode = 2
+
+[node name="boss出现时间" type="ProgressBar" parent="player_state"]
+layout_mode = 2
+
+[connection signal="timeout" from="Timer" to="." method="_finish_small_enemy_time"]
+[connection signal="timeout" from="per_second" to="." method="_on_per_second_timeout"]

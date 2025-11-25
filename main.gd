@@ -8,6 +8,9 @@ extends Node2D
 @export var upgrade_ui_scene: PackedScene  # 升级界面,全部都是要用的时候再创建,不错不错
 @export var gameover_ui: PackedScene  # 升级界面,全部都是要用的时候再创建,不错不错
 @export var player_scene: PackedScene
+@onready var boss_progress_bar: ProgressBar = $player_state/boss出现时间
+
+@export var boss_scene:PackedScene
 
 # 所有的属性的显示,能不能动态创建啊
 @onready var player_state_ui: VBoxContainer = $player_state
@@ -20,6 +23,9 @@ var ui_score: int = 0.0
 func _ready() -> void:
 	print("=== 新游戏场景初始化 _ready 执行 ===")  # 新增日志
 
+	boss_progress_bar.max_value = 35
+	boss_progress_bar.value = 35
+	
 	player = player_scene.instantiate()
 	player.position = get_player_spawn_position(player)
 	# 放置到屏幕下方的中间位置
@@ -113,3 +119,25 @@ func add_score():
 func open_game_over_ui():
 	var game_over_ui = gameover_ui.instantiate()  # todo 场景之间的切换逻辑, UI 的借还逻辑应该是怎么 养的呢
 	add_child(game_over_ui)
+
+
+func _finish_small_enemy_time() -> void:
+	pass # Replace with function body.
+	var boss = boss_scene.instantiate()
+	get_tree().get_root().add_child(boss)
+	var viewport_rect = get_viewport_rect()
+	var screen_width = viewport_rect.size.x
+	var screen_height = viewport_rect.size.y
+
+	# 3. 计算 Boss 的目标位置
+	var target_x = screen_width / 2  # 水平中间（屏幕宽的一半）
+	# 垂直位置：屏幕高的 1/4（确保在 1/3 上方，可按需调整比例，比如 1/5、1/3）
+	var target_y = screen_height / 4  
+
+	# 4. 设置 Boss 的全局位置（用 global_position 确保坐标正确）
+	boss.global_position = Vector2(target_x, target_y)
+
+
+func _on_per_second_timeout() -> void:
+	pass # Replace with function body.
+	boss_progress_bar.value -= 1

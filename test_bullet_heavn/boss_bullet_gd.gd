@@ -10,8 +10,9 @@ var direction: Vector2 = Vector2.DOWN
 @onready var state_chart: StateChart = $StateChart
 @onready var collision_polygon_2d: CollisionPolygon2D = $CollisionPolygon2D
 
-@export var max_health:float = 4
-@export var hp: float = 1000: set = set_hp
+@export var max_health:float
+var hp: float : set = set_hp
+var used_flag: bool = false
 
 var first_state_timer = Timer.new()  # 先创建，但是不启动
 
@@ -19,7 +20,10 @@ func set_hp(value):
 	hp = value
 	progress_bar.value = value
 	if hp <= max_health / 2:
-		state_chart.send_event("to_无敌状态")
+		if used_flag != true:
+			state_chart.send_event("to_无敌状态")
+			print("发送信号，to_无敌状态")
+			used_flag = true
 	if hp <=0:
 		print("boss 死了")
 		queue_free()
@@ -109,12 +113,15 @@ func _on_无敌状态_state_entered() -> void:
 	# todo 配置几秒的无敌
 	collision_polygon_2d.disabled = true
 	# 增加shadow 闪烁抖动啥的
+	
+	# 播放动画
 	print("正在无敌状态")
 	var timer = Timer.new()
 	timer.wait_time = 2
 	timer.autostart = true
-	timer.timeout.connect(invincible_timeout)
 	add_child(timer)
+
+	timer.timeout.connect(invincible_timeout)
 
 	
 func invincible_timeout():

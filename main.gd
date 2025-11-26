@@ -136,7 +136,7 @@ func _finish_small_enemy_time() -> void:
 	var screen_height = viewport_rect.size.y
 
 	# 3. 计算 Boss 的目标位置
-	var target_x = screen_width / 2  # 水平中间（屏幕宽的一半）
+	var target_x = screen_width / 2  # 水平中间（屏幕宽的一半）sd
 	# 垂直位置：屏幕高的 1/4（确保在 1/3 上方，可按需调整比例，比如 1/5、1/3）
 	var target_y = screen_height / 4  
 

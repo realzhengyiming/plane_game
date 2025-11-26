@@ -11,6 +11,7 @@
 [node name="Boss" type="Area2D"]
 script = ExtResource("1_xvva3")
 bullet_scene = ExtResource("2_711dr")
+max_health = 200.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(-2.75, 6.529999)
@@ -46,7 +47,7 @@ metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
 [node name="Transition" type="Node" parent="StateChart/root/hp_full"]
 script = ExtResource("7_7q280")
-to = NodePath("../../hp_half")
+to = NodePath("../../无敌状态")
 event = &"to_无敌状态"
 delay_in_seconds = "0.0"
 

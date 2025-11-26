@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cwkjdfb8lyjal"]
 
 [ext_resource type="Script" uid="uid://dy602hf7vey11" path="res://test_bullet_heavn/boss_bullet_gd.gd" id="1_xvva3"]
-[ext_resource type="PackedScene" path="res://bullet_snow.tscn" id="2_711dr"]
+[ext_resource type="PackedScene" uid="uid://dob2fdfcq8ecu" path="res://bullet_snow.tscn" id="2_711dr"]
 [ext_resource type="Texture2D" uid="uid://1vh17ltie0ry" path="res://test_bullet_heavn/imgi_356_450px-Dota_2_Monster_Hunter_codex_ancient_apparition_gameasset.png" id="3_gc5y4"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="4_p2x32"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="5_1cl77"]
@@ -47,6 +47,16 @@ metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 [node name="Transition" type="Node" parent="StateChart/root/hp_full"]
 script = ExtResource("7_7q280")
 to = NodePath("../../hp_half")
+event = &"to_无敌状态"
+delay_in_seconds = "0.0"
+
+[node name="无敌状态" type="Node" parent="StateChart/root"]
+script = ExtResource("6_0rqj8")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="Transition" type="Node" parent="StateChart/root/无敌状态"]
+script = ExtResource("7_7q280")
+to = NodePath("../../hp_half")
 event = &"to_hp_half"
 delay_in_seconds = "0.0"
 
@@ -68,3 +78,6 @@ offset_bottom = 253.53
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="state_entered" from="StateChart/root/hp_full" to="." method="_on_hp_full_state_entered"]
+[connection signal="state_exited" from="StateChart/root/hp_full" to="." method="_on_hp_full_state_exited"]
+[connection signal="state_entered" from="StateChart/root/无敌状态" to="." method="_on_无敌状态_state_entered"]
+[connection signal="state_entered" from="StateChart/root/hp_half" to="." method="_on_hp_half_state_entered"]

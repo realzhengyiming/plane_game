@@ -7,6 +7,7 @@
 
 [node name="Boss" parent="." instance=ExtResource("1_w5nqj")]
 position = Vector2(944, 192)
+max_health = 20.0
 
 [node name="player" parent="." instance=ExtResource("8_rfu0l")]
-position = Vector2(952, 664)
+position = Vector2(959, 1023)

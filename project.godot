@@ -32,6 +32,7 @@ enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg", "res://a
 [global_group]
 
 enemy=""
+player=""
 
 [input]
 

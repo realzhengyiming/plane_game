@@ -19,6 +19,7 @@ var player : Area2D = null  # 后赋值
 
 var timer: float = 0.0
 var ui_score: int = 0.0
+var spwan_flag: bool = true
 
 func _ready() -> void:
 	print("=== 新游戏场景初始化 _ready 执行 ===")  # 新增日志
@@ -90,6 +91,9 @@ func spawn_enemy() -> void:
 	if not enemy_scene or not score_label:
 		return
 	
+	if spwan_flag != true:
+		return  # false 就不生成小兵了
+	
 	var enemy = enemy_scene.instantiate() as Area2D
 	enemy.position.y = spawn_y_position
 	get_node("enemies").add_child(enemy)
@@ -122,6 +126,8 @@ func open_game_over_ui():
 
 
 func _finish_small_enemy_time() -> void:
+	spwan_flag = false  # 不再生成小兵
+	
 	pass # Replace with function body.
 	var boss = boss_scene.instantiate()
 	get_tree().get_root().add_child(boss)

@@ -20,4 +20,4 @@ func get_top_level_active_states(root: Node) -> String:
 
 	if active_states.is_empty():
 		return ""
-	return active_states[0]
+	return active_states[0] 

@@ -79,6 +79,9 @@ func fire_shot_player(dir):
 
 
 func _on_area_entered(area: Area2D) -> void:
+	var current_state = UpgradeConfig.get_top_level_active_states(root)
+	if current_state == "无敌状态":
+		return   # 直接跳过
 		# 被子弹打了，就扣血 半血就发疯
 	pass # Replace with function body.
 	if area.is_in_group("player"):
@@ -117,9 +120,14 @@ func _on_无敌状态_state_entered() -> void:
 	# 播放动画
 	print("正在无敌状态")
 	var timer = Timer.new()
-	timer.wait_time = 2
+	timer.wait_time = 1
 	timer.autostart = true
 	add_child(timer)
+	
+	# 简单闪烁示例（也可以用 AnimationPlayer）
+	var tween = create_tween().set_loops(4)
+	tween.tween_property(self, "modulate:a", 0.3, 0.1)
+	tween.tween_property(self, "modulate:a", 1.0, 0.1)
 
 	timer.timeout.connect(invincible_timeout)
 
@@ -127,7 +135,8 @@ func _on_无敌状态_state_entered() -> void:
 func invincible_timeout():
 	collision_polygon_2d.disabled = false
 	print("无敌状态解除")	
-
+	modulate.a = 1.0
+	state_chart.send_event("to_hp_half")
 
 func _on_hp_half_state_entered() -> void:
 	pass # Replace with function body.

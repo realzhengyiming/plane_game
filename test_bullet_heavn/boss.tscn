@@ -1,17 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwkjdfb8lyjal"]
+[gd_scene load_steps=9 format=3 uid="uid://cwkjdfb8lyjal"]
 
 [ext_resource type="Script" uid="uid://dy602hf7vey11" path="res://test_bullet_heavn/boss_bullet_gd.gd" id="1_xvva3"]
-[ext_resource type="PackedScene" uid="uid://dob2fdfcq8ecu" path="res://bullet_snow.tscn" id="2_711dr"]
+[ext_resource type="PackedScene" path="res://bullet_snow.tscn" id="2_711dr"]
 [ext_resource type="Texture2D" uid="uid://1vh17ltie0ry" path="res://test_bullet_heavn/imgi_356_450px-Dota_2_Monster_Hunter_codex_ancient_apparition_gameasset.png" id="3_gc5y4"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="4_p2x32"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="5_1cl77"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="6_0rqj8"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="7_7q280"]
+[ext_resource type="Script" uid="uid://dj0jqqgm1g8al" path="res://resources/components/2d_annimation.gd" id="8_711dr"]
 
 [node name="Boss" type="Area2D"]
 script = ExtResource("1_xvva3")
 bullet_scene = ExtResource("2_711dr")
-max_health = 200.0
+max_health = 1000.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(-2.75, 6.529999)
@@ -65,17 +66,18 @@ delay_in_seconds = "0.0"
 script = ExtResource("6_0rqj8")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="Transition" type="Node" parent="StateChart/root/hp_half"]
-script = ExtResource("7_7q280")
-to = NodePath("../../hp_full")
-event = &"to_hp_full"
-delay_in_seconds = "0.0"
-
 [node name="ProgressBar" type="ProgressBar" parent="."]
 offset_left = -203.75
 offset_top = 226.53
 offset_right = 202.25
 offset_bottom = 253.53
+
+[node name="2d_annimation" type="Node2D" parent="."]
+script = ExtResource("8_711dr")
+owner_node_path = NodePath("..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="2d_annimation"]
+root_node = NodePath("../..")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="state_entered" from="StateChart/root/hp_full" to="." method="_on_hp_full_state_entered"]

@@ -13,7 +13,7 @@ var bullet_state: BulletAttribute #: set=bullet_state_set
 @export var random_wave_phase: bool = true # 是否随机初始相位（避免弹幕同步）
 var time_alive: float = 0.0                # 子弹存活时间（计算波浪用）
 #var wave_phase_offset: float = 0.0         # 波浪初始相位偏移
-var group_name:String = UpgradeConfig.IS_ENEMY
+@export var group_name:String = UpgradeConfig.IS_ENEMY
 
 func _ready() -> void:
 	# 离开屏幕销毁
@@ -71,8 +71,12 @@ func _process(delta: float) -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:  # 自己链接自己
-	
+	if not area.has_meta("group_name"):
+		print("没有group_name这个属性")
+		return  #  没有就跳过
+	print("area_name", area.group_name)
 	if area.group_name not in get_groups():  # 不同分组的就可以造成伤害
+		
 		if bullet_state.through_times <= 0:
 			queue_free()  # 子弹就没了
 		else:

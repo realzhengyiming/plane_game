@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://boi71myiutumd"]
+
+[ext_resource type="PackedScene" uid="uid://cwkjdfb8lyjal" path="res://test_bullet_heavn/boss.tscn" id="1_w5nqj"]
+[ext_resource type="PackedScene" uid="uid://dou7iiy6wntei" path="res://player.tscn" id="8_rfu0l"]
+
+[node name="测试boss的弹幕发射" type="Node2D"]
+
+[node name="Boss" parent="." instance=ExtResource("1_w5nqj")]
+position = Vector2(944, 192)
+max_health = 20.0
+
+[node name="player" parent="." instance=ExtResource("8_rfu0l")]
+position = Vector2(959, 1023)

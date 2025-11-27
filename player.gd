@@ -98,7 +98,7 @@ func clamp_to_screen() -> void:
 # 处理与敌人的碰撞
 func _on_enemy_collision(area: Area2D) -> void:
 	# 假设敌人节点有"is_enemy"方法用于标识（需在敌人脚本中定义）
-	if group_name not in area.get_groups():
+	if group_name not in area.get_groups():  # 我之所以这样写，是因为 我想通过一个label判断， 而group_name很多个
 		take_damage(1)  # 敌人?或者子弹伤害了就掉血, 暂时先1血1伤
 
 # 掉血逻辑

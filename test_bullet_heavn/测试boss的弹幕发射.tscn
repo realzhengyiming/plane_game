@@ -1,13 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://boi71myiutumd"]
+[gd_scene load_steps=6 format=3 uid="uid://boi71myiutumd"]
 
 [ext_resource type="PackedScene" uid="uid://cwkjdfb8lyjal" path="res://test_bullet_heavn/boss.tscn" id="1_w5nqj"]
+[ext_resource type="Shader" uid="uid://dk5gecfqsbnkc" path="res://test_bullet_heavn/shader_星空.gdshader" id="3_qvknu"]
 [ext_resource type="PackedScene" uid="uid://dou7iiy6wntei" path="res://player.tscn" id="8_rfu0l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f8nf7"]
+render_priority = 1
+shader = ExtResource("3_qvknu")
+shader_parameter/background_color = Color(0.02, 0.04, 0.12, 1)
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/density = 1.3
+shader_parameter/layer_parascale = 4
+shader_parameter/star_speed = Vector2(0, 0)
+shader_parameter/star_wave = Vector2(0, 0)
+shader_parameter/star_size = 3.0
+shader_parameter/star_rotate_speed = 0.5
+shader_parameter/twinkle_effect = 0.6
+shader_parameter/twinkle_speed = 0.3
+shader_parameter/pixelate_enabled = false
+shader_parameter/pixelate_count = 1000.0
+
+[sub_resource type="Texture2DRD" id="Texture2DRD_qvknu"]
 
 [node name="测试boss的弹幕发射" type="Node2D"]
 
 [node name="Boss" parent="." instance=ExtResource("1_w5nqj")]
 position = Vector2(944, 192)
 max_health = 20.0
+guide_orb_scene = null
 
 [node name="player" parent="." instance=ExtResource("8_rfu0l")]
 position = Vector2(959, 1023)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_f8nf7")
+scale = Vector2(1920.0001, 674)
+texture = SubResource("Texture2DRD_qvknu")

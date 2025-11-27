@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://r3k0bdc1bu5l"]
+[gd_scene load_steps=11 format=3 uid="uid://r3k0bdc1bu5l"]
 
 [ext_resource type="Script" uid="uid://dv773qpsfiebj" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://dou7iiy6wntei" path="res://player.tscn" id="1_ig7tw"]
@@ -8,6 +8,22 @@
 [ext_resource type="PackedScene" uid="uid://by3y2w6ei4e1n" path="res://ui/game_over_ui.tscn" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cwkjdfb8lyjal" path="res://test_bullet_heavn/boss.tscn" id="6_5vw27"]
 [ext_resource type="PackedScene" uid="uid://d1fyhavepyt0r" path="res://components/star_bg.tscn" id="6_272bh"]
+[ext_resource type="Shader" uid="uid://v5bwe24n5xxi" path="res://shaders/starfield.gdshader" id="7_starfield"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_starfield"]
+shader = ExtResource("7_starfield")
+shader_parameter/background_color = Color(0.02, 0.04, 0.12, 1)
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/density = 1.3
+shader_parameter/layer_parascale = 4
+shader_parameter/star_speed = Vector2(0, 0)
+shader_parameter/star_wave = Vector2(0, 0)
+shader_parameter/star_size = 3.0
+shader_parameter/star_rotate_speed = 0.5
+shader_parameter/twinkle_effect = 0.6
+shader_parameter/twinkle_speed = 0.3
+shader_parameter/pixelate_enabled = false
+shader_parameter/pixelate_count = 1000.0
 
 [node name="main" type="Node2D" node_paths=PackedStringArray("score_label")]
 script = ExtResource("1_0xm2m")
@@ -18,7 +34,27 @@ gameover_ui = ExtResource("4_7mycd")
 player_scene = ExtResource("1_ig7tw")
 boss_scene = ExtResource("6_5vw27")
 
+[node name="StarfieldBackground" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="StarfieldBackground"]
+material = SubResource("ShaderMaterial_starfield")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OverlayMask" type="ColorRect" parent="StarfieldBackground"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.4)
+
 [node name="star_bg" parent="." instance=ExtResource("6_272bh")]
+visible = false
 
 [node name="enemies" type="Node2D" parent="."]
 

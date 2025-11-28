@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://c81g6blm4i4jh"]
+
+[ext_resource type="Texture2D" uid="uid://1vh17ltie0ry" path="res://test_bullet_heavn/imgi_356_450px-Dota_2_Monster_Hunter_codex_ancient_apparition_gameasset.png" id="1_mxh5g"]
+
+[resource]
+atlas = ExtResource("1_mxh5g")
+region = Rect2(186.747, 376.6965, 29.442398, 28.490143)

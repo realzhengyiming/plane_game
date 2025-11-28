@@ -42,46 +42,52 @@ metadata/_custom_type_script = "uid://couw105c3bde4"
 
 [node name="root" type="Node" parent="StateChart"]
 script = ExtResource("5_1cl77")
-initial_state = NodePath("hp_full")
+initial_state = NodePath("skill_super")
 metadata/_custom_type_script = "uid://jk2jm1g6q853"
 
 [node name="hp_full" type="Node" parent="StateChart/root"]
 script = ExtResource("6_0rqj8")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="to_无敌状态" type="Node" parent="StateChart/root/hp_full"]
+[node name="Transition" type="Node" parent="StateChart/root/hp_full"]
 script = ExtResource("7_7q280")
 to = NodePath("../../无敌状态")
 event = &"to_无敌状态"
+delay_in_seconds = "0.0"
+
+[node name="Transition2" type="Node" parent="StateChart/root/hp_full"]
+script = ExtResource("7_7q280")
+to = NodePath("../../skill_super")
+event = &"to_skill_super"
 delay_in_seconds = "0.0"
 
 [node name="无敌状态" type="Node" parent="StateChart/root"]
 script = ExtResource("6_0rqj8")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="hp_final" type="Node" parent="StateChart/root/无敌状态"]
+[node name="Transition" type="Node" parent="StateChart/root/无敌状态"]
 script = ExtResource("7_7q280")
-to = NodePath("../../hp_final")
-event = &"to_hp_final"
+to = NodePath("../../hp_half")
+event = &"to_hp_half"
 delay_in_seconds = "0.0"
 
-[node name="to_skill_super" type="Node" parent="StateChart/root/无敌状态"]
+[node name="Transition2" type="Node" parent="StateChart/root/无敌状态"]
+script = ExtResource("7_7q280")
+to = NodePath("../../skill_super")
+event = &"to_skill_super"
+delay_in_seconds = "0.0"
+
+[node name="hp_half" type="Node" parent="StateChart/root"]
+script = ExtResource("6_0rqj8")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="Transition2" type="Node" parent="StateChart/root/hp_half"]
 script = ExtResource("7_7q280")
 to = NodePath("../../skill_super")
 event = &"to_skill_super"
 delay_in_seconds = "0.0"
 
 [node name="skill_super" type="Node" parent="StateChart/root"]
-script = ExtResource("6_0rqj8")
-metadata/_custom_type_script = "uid://cytafq8i1y8qm"
-
-[node name="to_无敌状态" type="Node" parent="StateChart/root/skill_super"]
-script = ExtResource("7_7q280")
-to = NodePath("../../无敌状态")
-event = &"to_无敌状态"
-delay_in_seconds = "0.0"
-
-[node name="hp_final" type="Node" parent="StateChart/root"]
 script = ExtResource("6_0rqj8")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
@@ -102,5 +108,5 @@ root_node = NodePath("../..")
 [connection signal="state_entered" from="StateChart/root/hp_full" to="." method="_on_hp_full_state_entered"]
 [connection signal="state_exited" from="StateChart/root/hp_full" to="." method="_on_hp_full_state_exited"]
 [connection signal="state_entered" from="StateChart/root/无敌状态" to="." method="_on_无敌状态_state_entered"]
+[connection signal="state_entered" from="StateChart/root/hp_half" to="." method="_on_hp_half_state_entered"]
 [connection signal="state_entered" from="StateChart/root/skill_super" to="." method="ice_skill_timer_setup"]
-[connection signal="state_entered" from="StateChart/root/hp_final" to="." method="_on_hp_half_state_entered"]

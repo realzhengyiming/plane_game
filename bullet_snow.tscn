@@ -1,12 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dob2fdfcq8ecu"]
+[gd_scene load_steps=5 format=3 uid="uid://dob2fdfcq8ecu"]
 
 [ext_resource type="PackedScene" uid="uid://blsvlnialgt0s" path="res://bullet.tscn" id="1_4tfdt"]
-[ext_resource type="Texture2D" uid="uid://1vh17ltie0ry" path="res://test_bullet_heavn/imgi_356_450px-Dota_2_Monster_Hunter_codex_ancient_apparition_gameasset.png" id="2_mk8dk"]
+[ext_resource type="Texture2D" uid="uid://c81g6blm4i4jh" path="res://snowball_atlas_texture.tres" id="2_4pefm"]
 [ext_resource type="Script" uid="uid://d3lpbvs50acyn" path="res://test_bullet_heavn/sprite_rotation.gd" id="3_4pefm"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b01mi"]
-atlas = ExtResource("2_mk8dk")
-region = Rect2(186.747, 376.6965, 29.442398, 28.490143)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wm1gl"]
 radius = 12.0
@@ -17,7 +13,7 @@ radius = 12.0
 modulate = Color(1, 1, 1, 1)
 position = Vector2(-1.1920929e-07, 1.4210855e-14)
 scale = Vector2(0.949, 1)
-texture = SubResource("AtlasTexture_b01mi")
+texture = ExtResource("2_4pefm")
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CircleShape2D_wm1gl")

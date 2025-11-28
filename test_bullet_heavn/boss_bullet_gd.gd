@@ -121,7 +121,6 @@ func shot_player():
 		print("没有找到玩家")
 
 func _on_无敌状态_state_entered() -> void:
-	pass # Replace with function body.
 	# todo 配置几秒的无敌
 	collision_polygon_2d.disabled = true
 	# 增加shadow 闪烁抖动啥的
@@ -145,7 +144,12 @@ func invincible_timeout():
 	collision_polygon_2d.disabled = false
 	print("无敌状态解除")	
 	modulate.a = 1.0
-	state_chart.send_event("to_hp_half")
+	# 看血量分配
+	if hp <= max_health * 1/3:
+		state_chart.send_event("to_hp_final")  # 有点不好使的是，这个string 竟然不能直接引用枚举值
+	elif hp <= max_health * 2/3:
+		state_chart.send_event("to_skill_super")
+
 
 func _on_hp_half_state_entered() -> void:
 	pass # Replace with function body.
@@ -167,7 +171,7 @@ func ice_skill_timer_setup():
 	
 	print("进入了大招模式")
 	var ice_timer = Timer.new()
-	ice_timer.wait_time = 3
+	ice_timer.wait_time = 2
 	ice_timer.autostart = true
 	add_child(ice_timer)
 	
@@ -179,16 +183,16 @@ func ice_skill_super():
 	# 1. 指引光球飞行到玩家位置
 	# 2. 在玩家位置显示范围指示器
 	# 3. 延迟后发射真正的快速冰球
-	
-	var player_position = get_player_position()
-	if not player_position:
-		print("冰魂大：无法获取玩家位置")
-		return
-	
-	var start_position = spwan_bullet_mark.global_position
-	
-	# 阶段1：创建指引光球
-	create_guide_orb(start_position, player_position)
+	if hp < max_health * 1 / 3:
+		state_chart.send_event("to_无敌状态")
+	else:
+		var player_position = get_player_position()
+		if not player_position:
+			print("冰魂大：无法获取玩家位置")
+			return
+		var start_position = spwan_bullet_mark.global_position
+		# 阶段1：创建指引光球
+		create_guide_orb(start_position, player_position)
 
 func create_guide_orb(start_pos: Vector2, target_pos: Vector2):
 	# 如果有场景，使用场景；否则用代码创建
@@ -201,15 +205,15 @@ func create_guide_orb(start_pos: Vector2, target_pos: Vector2):
 			orb.setup(start_pos, target_pos, _on_guide_orb_arrive, player_group)
 	else:
 		# 代码创建简单的指引光球
-		var orb = create_simple_guide_orb(start_pos, target_pos)
+		var orb = create_simple_guide_orb(start_pos, target_pos, 10)
 
-func create_simple_guide_orb(start_pos: Vector2, target_pos: Vector2):
+func create_simple_guide_orb(start_pos: Vector2, target_pos: Vector2, scale: float):
 	# 创建一个简单的指引光球（如果没有场景）
 	var orb = Area2D.new()
 	var sprite = Sprite2D.new()
-	sprite.texture = load("res://icon.svg")  # 使用默认图标
+	sprite.texture = load("res://snowball_atlas_texture.tres") # 使用默认图标
 	sprite.modulate = Color(0.5, 0.8, 1.0, 0.8)  # 蓝色半透明
-	sprite.scale = Vector2(0.5, 0.5)
+	sprite.scale = Vector2(1, 1)
 	orb.add_child(sprite)
 	
 	get_tree().current_scene.get_parent().add_child(orb)
@@ -219,13 +223,13 @@ func create_simple_guide_orb(start_pos: Vector2, target_pos: Vector2):
 	
 	# 飞行到目标位置
 	var distance = start_pos.distance_to(target_pos)
-	var speed = 300.0
+	var speed = 500.0
 	var travel_time = distance / speed
 	
 	var tween = orb.create_tween()
 	tween.set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(orb, "global_position", target_pos, travel_time)
-	tween.tween_callback(func(): _on_guide_orb_arrive(target_pos))
+	tween.tween_callback(func(): _on_guide_orb_arrive(target_pos, scale))
 	tween.tween_callback(orb.queue_free)
 	
 	return orb
@@ -256,28 +260,25 @@ func create_range_indicator(position: Vector2, scale_multiplier: float = 1.0):
 
 func create_simple_indicator(position: Vector2, scale_multiplier: float = 1.0):
 	# 创建一个简单的范围指示器（如果没有场景）
+	# 指示器的大小要和第二发真实子弹的 scale 一样
 	var indicator = Area2D.new()
 	var sprite = Sprite2D.new()
-	sprite.texture = load("res://icon.svg")
+	sprite.texture = load("res://snowball_atlas_texture.tres")
 	sprite.modulate = Color(0.3, 0.6, 1.0, 0.5)  # 蓝色，半透明
 	
-	# 基础尺寸和半径
-	var base_scale = 3.0
-	var base_radius = 50.0
+	# 子弹的原始碰撞体半径（从 bullet_snow.tscn 中获取）
+	const BULLET_BASE_RADIUS = 12.0
 	
-	# 根据放大倍数调整尺寸和半径
-	var final_scale = base_scale * scale_multiplier
-	var final_radius = base_radius * scale_multiplier
-	
-	sprite.scale = Vector2(final_scale, final_scale)  # 根据倍数调整
+	# 直接使用 scale_multiplier，和子弹的 scale 保持一致
+	sprite.scale = Vector2(scale_multiplier, scale_multiplier)
 	indicator.add_child(sprite)
 	indicator.collision_layer = 2
 	indicator.collision_mask = 1
 	
-	# 添加碰撞体（圆形），半径根据倍数调整
+	# 添加碰撞体（圆形），半径 = 原始半径 * 倍数
 	var collision = CollisionShape2D.new()
 	var circle_shape = CircleShape2D.new()
-	circle_shape.radius = final_radius  # 范围半径根据倍数调整
+	circle_shape.radius = BULLET_BASE_RADIUS * scale_multiplier
 	collision.shape = circle_shape
 	
 	indicator.add_child(collision)
@@ -292,11 +293,11 @@ func create_simple_indicator(position: Vector2, scale_multiplier: float = 1.0):
 	# 淡入
 	tween.tween_property(sprite, "modulate:a", 0.6, 0.3)
 	
-	# 脉冲效果（循环），基于最终尺寸
+	# 脉冲效果（循环），基于 scale_multiplier
 	var pulse_tween = indicator.create_tween()
 	pulse_tween.set_loops()
-	pulse_tween.tween_property(sprite, "scale", Vector2(final_scale * 1.1, final_scale * 1.1), 0.5)
-	pulse_tween.tween_property(sprite, "scale", Vector2(final_scale, final_scale), 0.5)
+	pulse_tween.tween_property(sprite, "scale", Vector2(scale_multiplier * 1.1, scale_multiplier * 1.1), 0.5)
+	pulse_tween.tween_property(sprite, "scale", Vector2(scale_multiplier, scale_multiplier), 0.5)
 	
 	# 2秒后淡出并销毁（使用 Timer）
 	var timer = Timer.new()

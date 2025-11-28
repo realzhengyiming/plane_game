@@ -51,6 +51,8 @@ func setup(start_position: Vector2, move_direction: Vector2, add2group_name:Stri
 	label.text += "\n" + "cross:" + str(bullet_state.through_times)
 	add_to_group(add2group_name)  # 添加到分组
 
+#func setup_by_target_position(start_position:Vector2, )
+
 func _process(delta: float) -> void:
 	# -------------------------- 修改：波浪轨迹计算 --------------------------
 	time_alive += delta # 累计存活时间

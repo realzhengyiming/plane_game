@@ -11,7 +11,7 @@ signal player_state_changed(plane_state: PlaneAttribute, changed_prop: String)  
 var velocity: Vector2 = Vector2.ZERO
 #var last_fire_time: float = 0.0
 @onready var shoot_component: Node2D = $shoot_component
-@onready var marker: Marker = $Marker
+#@onready var marker: Marker = $Marker
 var plane_upgraded_list: Array[BaseStrategy]  # 挑选出角色的, 来了就升级一次
 @export var group_name:String = UpgradeConfig.IS_PLAYER
 

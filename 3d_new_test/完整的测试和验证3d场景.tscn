@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://0co5ghlaoiw5"]
+
+[ext_resource type="PackedScene" uid="uid://co63hlfx5c1oi" path="res://3d_new_test/character_vampire.tscn" id="1_5a0fu"]
+[ext_resource type="Script" uid="uid://dtymmfiqy7a22" path="res://test_3d/3d_player.gd" id="1_pofva"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="3_yn2ra"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="4_b1jun"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="5_k4avf"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="6_u6moo"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pofva"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_7uip4"]
+sky_material = SubResource("ProceduralSkyMaterial_pofva")
+
+[sub_resource type="Environment" id="Environment_b4b7q"]
+background_mode = 2
+sky = SubResource("Sky_7uip4")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yn2ra"]
+radius = 0.18261719
+height = 0.74694824
+
+[sub_resource type="BoxMesh" id="BoxMesh_pofva"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yn2ra"]
+albedo_color = Color(0.2, 0.28235295, 0.1254902, 1)
+
+[node name="3d_world" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b4b7q")
+
+[node name="3d_player" type="CharacterBody3D" parent="."]
+script = ExtResource("1_pofva")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="3d_player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36920953, 0)
+shape = SubResource("CapsuleShape3D_yn2ra")
+
+[node name="character-vampire" parent="3d_player" instance=ExtResource("1_5a0fu")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="越肩视角" type="Camera3D" parent="3d_player"]
+transform = Transform3D(0.9781476, 0, 0.2079117, 0, 1, 0, -0.2079117, 0, 0.9781476, 0.78658867, 0.603518, 0.5939763)
+current = true
+fov = 92.2
+
+[node name="StateChart" type="Node" parent="3d_player"]
+script = ExtResource("3_yn2ra")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="CompoundState" type="Node" parent="3d_player/StateChart"]
+script = ExtResource("4_b1jun")
+initial_state = NodePath("idle")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="idle" type="Node" parent="3d_player/StateChart/CompoundState"]
+script = ExtResource("5_k4avf")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="to_walk" type="Node" parent="3d_player/StateChart/CompoundState/idle"]
+script = ExtResource("6_u6moo")
+to = NodePath("../../walk")
+event = &"to_walk"
+delay_in_seconds = "0.0"
+
+[node name="walk" type="Node" parent="3d_player/StateChart/CompoundState"]
+script = ExtResource("5_k4avf")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="to_idle" type="Node" parent="3d_player/StateChart/CompoundState/walk"]
+script = ExtResource("6_u6moo")
+to = NodePath("../../idle")
+delay_in_seconds = "0.0"
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.50699943, 0)
+use_collision = true
+mesh = SubResource("BoxMesh_pofva")
+material = SubResource("StandardMaterial3D_yn2ra")

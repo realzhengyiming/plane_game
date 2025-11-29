@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://co63hlfx5c1oi"]
+
+[ext_resource type="PackedScene" uid="uid://dvgq76n1sbpb4" path="res://3d_new_test/FBX format/character-vampire.fbx" id="1_gnq43"]
+[ext_resource type="Script" uid="uid://j1yy8gkjilsy" path="res://3d_new_test/character_vampire.gd" id="2_qwk4t"]
+
+[node name="character-vampire" instance=ExtResource("1_gnq43")]
+script = ExtResource("2_qwk4t")
+
+[node name="arm-right" parent="character-vampire/root/torso" index="0"]
+transform = Transform3D(0.7071067, -0.7071067, 0, 0.7071067, 0.7071067, 0, 0, 0, 1, -0.125, 0.15, 0.0024999976)
+
+[node name="arm-left" parent="character-vampire/root/torso" index="1"]
+transform = Transform3D(0.7071067, 0.7071068, 0, -0.7071068, 0.7071067, 0, 0, 0, 1, 0.125, 0.15, 0.0024999976)
